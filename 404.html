@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Страница не найдена</title>
+    <script>
+      // GitHub Pages отдаёт только корневой 404.html на любой несуществующий путь.
+      // Редирект только для /soviet-ai/… → /soviet-ai/#/…, query и hash сохраняются внутри фрагмента,
+      // потому что HashRouter читает маршрут из location.hash, а не из location.search.
+      function sovietAiHashTarget(pathname, search, hash) {
+        var prefix = "/soviet-ai";
+        if (pathname !== prefix && pathname.indexOf(prefix + "/") !== 0) return "";
+        var rest = pathname.slice(prefix.length).replace(/\/+$/, "");
+        if (!rest) rest = "/";
+        if (rest.charAt(0) !== "/") rest = "/" + rest;
+        return prefix + "/#" + rest + (search || "") + (hash || "");
+      }
+      (function () {
+        var target = sovietAiHashTarget(location.pathname, location.search, location.hash);
+        if (target) location.replace(target);
+      })();
+    </script>
+  </head>
+  <body style="margin: 0; padding: 48px 20px; font-family: system-ui, sans-serif; color: #171d39; background: #fff;">
+    <p style="margin: 0; font-size: 18px;">Страница не найдена.</p>
+  </body>
+</html>
