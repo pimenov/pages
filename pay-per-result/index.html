@@ -1,11 +1,29 @@
 <!doctype html>
 <html lang="ru">
   <head>
-    <meta name="robots" content="noindex, nofollow">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#08090c" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#08090c" id="theme-color" />
+    <meta name="robots" content="noindex, nofollow" />
+    <script>
+      (function () {
+        var theme = "dark";
+        try {
+          var saved = localStorage.getItem("ppr-theme");
+          if (saved === "light" || saved === "dark") theme = saved;
+          else if (window.matchMedia("(prefers-color-scheme: light)").matches) theme = "light";
+        } catch (e) {}
+        document.documentElement.setAttribute("data-theme", theme);
+        document.documentElement.style.colorScheme = theme;
+        var meta = document.getElementById("theme-color");
+        if (meta) meta.setAttribute("content", theme === "light" ? "#ffffff" : "#08090c");
+      })();
+    </script>
+    <style>
+      html { background: #08090c; }
+      html[data-theme="light"] { background: #ffffff; }
+    </style>
     <title>Платить за токены или за результат?</title>
     <meta
       name="description"
@@ -22,8 +40,8 @@
     <link rel="icon" href="/pay-per-result/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/pay-per-result/favicon-32x32.png" type="image/png" sizes="32x32" />
     <link rel="shortcut icon" href="/pay-per-result/favicon.ico" />
-    <script type="module" crossorigin src="/pay-per-result/assets/index-BFM1S0UG.js"></script>
-    <link rel="stylesheet" crossorigin href="/pay-per-result/assets/index-BRj0N8Ry.css">
+    <script type="module" crossorigin src="/pay-per-result/assets/index-sR8ZNEGk.js"></script>
+    <link rel="stylesheet" crossorigin href="/pay-per-result/assets/index-IGhMb4Rt.css">
   </head>
   <body>
     <div id="root"></div>
