@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Интернет исчезает · pimenov.ai</title>
+    <meta
+      name="description"
+      content="Из 100 страниц 2013 года к 2023-му исчезли 38. Факты и цифры — из открытых источников, ссылки у каждого пункта."
+    />
+    <link rel="canonical" href="https://lab.pimenov.ai/internet-disappears/" />
+    <meta property="og:title" content="Интернет исчезает" />
+    <meta
+      property="og:description"
+      content="Из 100 страниц 2013 года к 2023-му исчезли 38."
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:url" content="https://lab.pimenov.ai/internet-disappears/" />
+    <meta property="og:image" content="https://lab.pimenov.ai/internet-disappears/share/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Интернет исчезает. Из 100 страниц 2013 года к 2023-му исчезли 38." />
+    <link rel="icon" href="/internet-disappears/favicon.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        var key = "internet-disappears-theme";
+        var choice = "system";
+        try {
+          var stored = localStorage.getItem(key);
+          if (stored === "light" || stored === "dark" || stored === "system") choice = stored;
+        } catch (e) {}
+        var dark =
+          choice === "dark" ||
+          (choice === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        var root = document.documentElement;
+        root.dataset.theme = choice;
+        root.dataset.resolved = dark ? "dark" : "light";
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          root.dataset.motion = "reduce";
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/internet-disappears/assets/index-Br8IIfoE.js"></script>
+    <link rel="stylesheet" crossorigin href="/internet-disappears/assets/index-D4Sp8B2O.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
