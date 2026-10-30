@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f3f6fb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#07080d" media="(prefers-color-scheme: dark)" />
+    <meta name="robots" content="noindex, nofollow" />
+    <script>
+      (function () {
+        var stored = null;
+        try { stored = localStorage.getItem("camera-moves-theme"); } catch (e) {}
+        var theme = stored === "light" || stored === "dark"
+          ? stored
+          : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        var root = document.documentElement;
+        root.setAttribute("data-theme", theme);
+        root.style.colorScheme = theme;
+        if (stored) {
+          document.querySelectorAll('meta[name="theme-color"]').forEach(function (meta) {
+            meta.setAttribute("content", theme === "light" ? "#f3f6fb" : "#07080d");
+            meta.removeAttribute("media");
+          });
+        }
+      })();
+    </script>
+    <title>Операторские приёмы: живой словарик для видеопромптов · pimenov.ai</title>
+    <meta name="description" content="24 операторских приёма с анимацией: схема движения камеры, как выглядит кадр и английский термин для видеопромпта." />
+    <meta property="og:title" content="Операторские приёмы: живой словарик для видеопромптов" />
+    <meta property="og:description" content="Проводка за героем, нижний ракурс, затемнение и ещё 21 приём: анимация, кадр и термин для промпта." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:url" content="https://lab.pimenov.ai/camera-moves/" />
+    <link rel="icon" href="/camera-moves/favicon.svg" type="image/svg+xml" />
+    <script type="module" crossorigin src="/camera-moves/assets/index-9w67ebTj.js"></script>
+    <link rel="stylesheet" crossorigin href="/camera-moves/assets/index-DCGaIhSO.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
