@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f3f6fb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#07080d" media="(prefers-color-scheme: dark)" />
+    <meta name="robots" content="noindex, nofollow" />
+    <script>
+      (function () {
+        var stored = null;
+        try { stored = localStorage.getItem("bot-pipeline-theme"); } catch (e) {}
+        var theme = stored === "light" || stored === "dark"
+          ? stored
+          : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        var root = document.documentElement;
+        root.setAttribute("data-theme", theme);
+        root.style.colorScheme = theme;
+        if (stored) {
+          document.querySelectorAll('meta[name="theme-color"]').forEach(function (meta) {
+            meta.setAttribute("content", theme === "light" ? "#f3f6fb" : "#07080d");
+            meta.removeAttribute("media");
+          });
+        }
+      })();
+    </script>
+    <title>Команда Grok-ботов + Codex: как устроена работа · pimenov.ai</title>
+    <meta name="description" content="Интерактивная схема для «Вебинара Перезагрузки» 1 ноября: X Scout, 103 Writer, Codex «Степан», Reels Studio, Мультлаб и Саркис. Как одна тема проходит путь от X до pimenov.ai." />
+    <meta property="og:title" content="Команда Grok-ботов + Codex: как устроена работа" />
+    <meta property="og:description" content="Кто за что отвечает и как одна тема проходит путь от поста в X до статьи на pimenov.ai." />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:url" content="https://lab.pimenov.ai/bot-pipeline/" />
+    <link rel="icon" href="/bot-pipeline/favicon.svg" type="image/svg+xml" />
+    <script type="module" crossorigin src="/bot-pipeline/assets/index-Dq9WYXm_.js"></script>
+    <link rel="stylesheet" crossorigin href="/bot-pipeline/assets/index-cbzUIUrf.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
