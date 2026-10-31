@@ -4,25 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#08090c" id="theme-color" />
+    <meta name="theme-color" content="#ffffff" id="theme-color" />
     <meta name="robots" content="noindex, nofollow" />
     <script>
       (function () {
-        var theme = "dark";
+        var ok = { light: 1, dark: 1, cyberpunk: 1 };
+        var theme = "light";
         try {
-          var saved = localStorage.getItem("ppr-theme");
-          if (saved === "light" || saved === "dark") theme = saved;
-          else if (window.matchMedia("(prefers-color-scheme: light)").matches) theme = "light";
+          var saved = localStorage.getItem("lab-theme");
+          if (!ok[saved]) saved = localStorage.getItem("ppr-theme");
+          if (ok[saved]) theme = saved;
         } catch (e) {}
         document.documentElement.setAttribute("data-theme", theme);
-        document.documentElement.style.colorScheme = theme;
+        document.documentElement.style.colorScheme = theme === "dark" ? "dark" : "light";
         var meta = document.getElementById("theme-color");
-        if (meta) meta.setAttribute("content", theme === "light" ? "#ffffff" : "#08090c");
+        if (meta) meta.setAttribute("content", { light: "#ffffff", dark: "#08090c", cyberpunk: "#fff248" }[theme]);
       })();
     </script>
     <style>
       html { background: #08090c; }
       html[data-theme="light"] { background: #ffffff; }
+      html[data-theme="cyberpunk"] { background: #fff248; }
     </style>
     <title>Платить за токены или за результат?</title>
     <meta
@@ -40,8 +42,8 @@
     <link rel="icon" href="/pay-per-result/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/pay-per-result/favicon-32x32.png" type="image/png" sizes="32x32" />
     <link rel="shortcut icon" href="/pay-per-result/favicon.ico" />
-    <script type="module" crossorigin src="/pay-per-result/assets/index-sR8ZNEGk.js"></script>
-    <link rel="stylesheet" crossorigin href="/pay-per-result/assets/index-IGhMb4Rt.css">
+    <script type="module" crossorigin src="/pay-per-result/assets/index-Zv-7PPsl.js"></script>
+    <link rel="stylesheet" crossorigin href="/pay-per-result/assets/index-BME51SSC.css">
   </head>
   <body>
     <div id="root"></div>
