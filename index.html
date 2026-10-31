@@ -25,6 +25,9 @@
         --page-muted: #525e52;
         --page-link: #24613e;
         --page-link-hover: #153c25;
+        --card-bg: #ffffff;
+        --card-border: #d9ded6;
+        --card-hover: #f1f5ef;
       }
       :root[data-theme="dark"] {
         --page-paper: #0f1210;
@@ -32,6 +35,9 @@
         --page-muted: #a9b5a9;
         --page-link: #8fd3a8;
         --page-link-hover: #b9e8c9;
+        --card-bg: #171b18;
+        --card-border: #2c332d;
+        --card-hover: #1e2420;
       }
       /* Киберпанк: палитра :root[data-theme=cyberpunk] с pimenov.ai */
       :root[data-theme="cyberpunk"] {
@@ -40,6 +46,9 @@
         --page-muted: #56445c;
         --page-link: #941342;
         --page-link-hover: #701034;
+        --card-bg: #fff7a0;
+        --card-border: #a79632;
+        --card-hover: #fffbd0;
       }
       body {
         margin: 0;
@@ -81,6 +90,32 @@
         z-index: 5;
       }
       .home-tg { margin: 0 0 32px; }
+      .projects {
+        display: grid;
+        gap: 12px;
+        margin: 0 0 32px;
+        padding: 0;
+        list-style: none;
+      }
+      .project {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px 18px;
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        background: var(--card-bg);
+        color: var(--page-ink);
+        text-decoration: none;
+        transition: border-color 0.16s ease-out, background 0.16s ease-out;
+      }
+      .project:hover { border-color: var(--page-link); background: var(--card-hover); color: var(--page-ink); }
+      .project:focus-visible { outline: 2px solid var(--page-link); outline-offset: 3px; }
+      .project-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+      .project-title { font-size: 1.125rem; font-weight: 650; line-height: 1.3; }
+      .project-desc { color: var(--page-muted); font-size: 0.95rem; line-height: 1.4; }
+      .project-arrow { flex: none; width: 20px; height: 20px; color: var(--page-link); }
+      @media (prefers-reduced-motion: reduce) { .project { transition: none; } }
       a:focus-visible {
         outline: 2px solid currentColor;
         outline-offset: 5px;
@@ -91,13 +126,16 @@
     <div class="lab-top" data-lab-theme-switch></div>
     <main>
       <h1>Лаборатория Сергея Пименова</h1>
-      <p>Здесь будут страницы и прототипы Grok-ботов. Скоро.</p>
+      <p>Открытые проекты и прототипы Grok&#8209;ботов.</p>
       <aside class="lab-tg home-tg" aria-label="Telegram-канал НИИ ИИ">
         <span class="lab-tg__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.7 3.3 2.6 10.3c-1.2.5-1.2 1.2-.2 1.5l4.6 1.4 1.8 5.4c.2.6.1.8.7.8.5 0 .7-.2 1-.5l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.8-1.3-1.5zM8.9 13l8.8-5.6c.4-.3.8-.1.5.2l-7.6 6.8-.3 3.3L8.9 13z"/></svg></span>
         <span class="lab-tg__text"><span class="lab-tg__title">Telegram-канал «НИИ&nbsp;ИИ»</span><span class="lab-tg__sub">Сергей Пименов о практическом ИИ</span></span>
         <a class="lab-tg__btn" href="https://t.me/ai_rostov" target="_blank" rel="noopener">Подписаться</a>
       </aside>
-      <p><a href="/style-lab/">Витрина стилей роликов и подборщик</a></p>
+      <ul class="projects" aria-label="Проекты">
+        <li><a class="project" href="/soviet-ai/"><span class="project-text"><span class="project-title">Советские прогнозы об ИИ</span><span class="project-desc">18 книг 1958–1991 годов: что сбылось к 2026 году</span></span><svg class="project-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4.5-4.5L15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+        <li><a class="project" href="/internet-disappears/"><span class="project-text"><span class="project-title">Интернет исчезает</span><span class="project-desc">Из 100 страниц 2013 года к 2023-му исчезли 38</span></span><svg class="project-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4.5-4.5L15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
+      </ul>
       <a href="https://pimenov.ai">pimenov.ai</a>
     </main>
   </body>
