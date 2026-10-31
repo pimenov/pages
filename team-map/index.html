@@ -9,20 +9,23 @@
     <meta name="robots" content="noindex, nofollow" />
     <script>
       (function () {
-        var stored = null;
-        try { stored = localStorage.getItem("team-map-theme"); } catch (e) {}
-        var theme = stored === "light" || stored === "dark"
-          ? stored
-          : (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
-        var color = theme === "light" ? "#f3f6fb" : "#07080d";
+        var ok = { light: 1, dark: 1, cyberpunk: 1 };
+        var theme = "light";
+        try {
+          var saved = localStorage.getItem("lab-theme");
+          if (!ok[saved]) saved = localStorage.getItem("team-map-theme");
+          if (ok[saved]) theme = saved;
+        } catch (e) {}
+        var color = { light: "#f3f6fb", dark: "#07080d", cyberpunk: "#fff248" }[theme];
+        var scheme = theme === "dark" ? "dark" : "light";
         var root = document.documentElement;
         root.setAttribute("data-theme", theme);
-        root.style.colorScheme = theme;
-        var scheme = document.querySelector('meta[name="color-scheme"]');
-        if (scheme) scheme.setAttribute("content", theme);
-        document.querySelectorAll('meta[name="theme-color"]').forEach(function (meta) {
-          meta.setAttribute("content", color);
-          meta.removeAttribute("media");
+        root.style.colorScheme = scheme;
+        var meta = document.querySelector('meta[name="color-scheme"]');
+        if (meta) meta.setAttribute("content", scheme);
+        document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+          m.setAttribute("content", color);
+          m.removeAttribute("media");
         });
       })();
     </script>
@@ -42,8 +45,8 @@
     <link rel="icon" href="/team-map/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/team-map/favicon-32x32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="/team-map/favicon.ico" sizes="any" />
-    <script type="module" crossorigin src="/team-map/assets/index-Bybk5j9f.js"></script>
-    <link rel="stylesheet" crossorigin href="/team-map/assets/index-DzINpl77.css">
+    <script type="module" crossorigin src="/team-map/assets/index-sZVayySg.js"></script>
+    <link rel="stylesheet" crossorigin href="/team-map/assets/index-_2FMIewQ.css">
   </head>
   <body>
     <div id="root"></div>

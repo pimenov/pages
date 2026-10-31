@@ -3,11 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="light dark" />
+    <script>
+      (function () {
+        var ok = { light: 1, dark: 1, cyberpunk: 1 };
+        var theme = "light";
+        try {
+          var saved = localStorage.getItem("lab-theme");
+          if (ok[saved]) theme = saved;
+        } catch (e) {}
+        document.documentElement.setAttribute("data-theme", theme);
+        document.documentElement.style.colorScheme = theme === "dark" ? "dark" : "light";
+      })();
+    </script>
     <title>Лаборатория стилей · pimenov.ai</title>
     <link rel="icon" href="/style-lab/favicon.svg" type="image/svg+xml" />
-    <script type="module" crossorigin src="/style-lab/assets/index-D2LmRoQM.js"></script>
-    <link rel="stylesheet" crossorigin href="/style-lab/assets/index-DNwh3HWK.css">
+    <script type="module" crossorigin src="/style-lab/assets/index-CPlJXFlV.js"></script>
+    <link rel="stylesheet" crossorigin href="/style-lab/assets/index-CF0pdD_5.css">
   </head>
   <body>
     <div id="root"></div>

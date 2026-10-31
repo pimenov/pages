@@ -2,9 +2,9 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
+    <meta name="robots" content="noindex, nofollow" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="robots" content="noindex, nofollow" />
     <title>Интернет исчезает · pimenov.ai</title>
     <meta
       name="description"
@@ -26,25 +26,24 @@
     <link rel="icon" href="/internet-disappears/favicon.svg" type="image/svg+xml" />
     <script>
       (function () {
-        var key = "internet-disappears-theme";
-        var choice = "system";
+        var ok = { light: 1, dark: 1, cyberpunk: 1 };
+        var theme = "light";
         try {
-          var stored = localStorage.getItem(key);
-          if (stored === "light" || stored === "dark" || stored === "system") choice = stored;
+          var saved = localStorage.getItem("lab-theme");
+          if (!ok[saved]) saved = localStorage.getItem("internet-disappears-theme");
+          if (ok[saved]) theme = saved;
         } catch (e) {}
-        var dark =
-          choice === "dark" ||
-          (choice === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
         var root = document.documentElement;
-        root.dataset.theme = choice;
-        root.dataset.resolved = dark ? "dark" : "light";
+        root.dataset.theme = theme;
+        root.dataset.resolved = theme;
+        root.style.colorScheme = theme === "dark" ? "dark" : "light";
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
           root.dataset.motion = "reduce";
         }
       })();
     </script>
-    <script type="module" crossorigin src="/internet-disappears/assets/index-BNdYxa0M.js"></script>
-    <link rel="stylesheet" crossorigin href="/internet-disappears/assets/index-Dbwpdo5m.css">
+    <script type="module" crossorigin src="/internet-disappears/assets/index-CrbPSTFJ.js"></script>
+    <link rel="stylesheet" crossorigin href="/internet-disappears/assets/index-Bl9qtdhI.css">
   </head>
   <body>
     <div id="root"></div>

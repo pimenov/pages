@@ -9,20 +9,21 @@
     <meta name="robots" content="noindex, nofollow" />
     <script>
       (function () {
-        var stored = null;
-        try { stored = localStorage.getItem("live-office-theme"); } catch (e) {}
-        var theme = stored === "light" || stored === "dark"
-          ? stored
-          : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        var ok = { light: 1, dark: 1, cyberpunk: 1 };
+        var theme = "light";
+        try {
+          var saved = localStorage.getItem("lab-theme");
+          if (!ok[saved]) saved = localStorage.getItem("live-office-theme");
+          if (ok[saved]) theme = saved;
+        } catch (e) {}
         var root = document.documentElement;
         root.setAttribute("data-theme", theme);
-        root.style.colorScheme = theme;
-        if (stored) {
-          document.querySelectorAll('meta[name="theme-color"]').forEach(function (meta) {
-            meta.setAttribute("content", theme === "light" ? "#f3f6fb" : "#07080d");
-            meta.removeAttribute("media");
-          });
-        }
+        root.style.colorScheme = theme === "dark" ? "dark" : "light";
+        var color = { light: "#f3f6fb", dark: "#07080d", cyberpunk: "#fff248" }[theme];
+        document.querySelectorAll('meta[name="theme-color"]').forEach(function (meta) {
+          meta.setAttribute("content", color);
+          meta.removeAttribute("media");
+        });
       })();
     </script>
     <title>Живой офис Grok-ботов · pimenov.ai</title>
@@ -33,9 +34,9 @@
     <meta property="og:locale" content="ru_RU" />
     <meta property="og:url" content="https://lab.pimenov.ai/live-office/" />
     <link rel="icon" href="/live-office/favicon.svg" type="image/svg+xml" />
-    <script type="module" crossorigin src="/live-office/assets/index-BWAmMLBr.js"></script>
+    <script type="module" crossorigin src="/live-office/assets/index-BHoateLi.js"></script>
     <link rel="modulepreload" crossorigin href="/live-office/assets/three-CZgLXPTw.js">
-    <link rel="stylesheet" crossorigin href="/live-office/assets/index-BV1SpJrJ.css">
+    <link rel="stylesheet" crossorigin href="/live-office/assets/index-_1nWzBS_.css">
   </head>
   <body>
     <div id="root"></div>
