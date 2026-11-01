@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Итоги вебинара «Перезагрузка» 1 ноября: команда Grok-ботов в прямом эфире · pimenov.ai</title>
+<meta name="description" content="1 ноября 2026 команда Grok-ботов Сергея Пименова работала в прямом эфире: Степан (Codex на Mac Mini) собрал живой сайт из поста, Research Desk ответил на вопрос зрительницы обзором на 40 источников, а Саркис сделал из него страницу.">
+<meta name="theme-color" content="#0E0F1A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&display=swap&subset=cyrillic" rel="stylesheet">
+<style>
+:root{
+  --ink:#0E0F1A; --ink2:#171A2B; --paper:#F6F2EA; --card:#FFFFFF; --line:rgba(14,15,26,.10);
+  --muted:#5D6074; --lime:#C6F432; --coral:#FF5A3C; --amber:#FFB020; --violet:#7B61FF; --teal:#12B5A0; --sky:#3D7BFF;
+  --r:22px; --sh:0 1px 0 rgba(14,15,26,.04),0 18px 50px -24px rgba(14,15,26,.28);
+  --disp:'Unbounded',system-ui,sans-serif; --body:'Manrope',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:500 17px/1.6 var(--body);overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.progress{position:fixed;left:0;top:0;height:3px;width:0;background:linear-gradient(90deg,var(--lime),var(--amber),var(--coral));z-index:60}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:22px;padding:14px 24px;background:rgba(14,15,26,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;border-bottom:1px solid rgba(255,255,255,.06)}
+.brand{font:800 18px var(--disp);text-decoration:none;letter-spacing:-.01em}
+.brand b{color:var(--lime)}
+.nav .l{font-weight:700;font-size:14px;text-decoration:none;opacity:.72}
+.nav .l:hover{opacity:1}
+.nav .sp{flex:1}
+.nav .cta{font-weight:800;font-size:14px;text-decoration:none;background:var(--lime);color:var(--ink);padding:9px 16px;border-radius:999px}
+@media(max-width:900px){.nav .l{display:none}}
+
+/* HERO */
+.hero{position:relative;background:var(--ink);color:#fff;overflow:hidden;padding:84px 0 70px}
+.hero:before{content:"";position:absolute;inset:-20%;background:
+  radial-gradient(38% 40% at 82% 18%,rgba(255,90,60,.45),transparent 70%),
+  radial-gradient(34% 36% at 12% 90%,rgba(123,97,255,.40),transparent 70%),
+  radial-gradient(26% 30% at 60% 75%,rgba(198,244,50,.18),transparent 70%);filter:blur(10px);animation:drift 18s ease-in-out infinite alternate}
+.hero:after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(180deg,#000 30%,transparent 95%);-webkit-mask-image:linear-gradient(180deg,#000 30%,transparent 95%)}
+@keyframes drift{to{transform:translate3d(-3%,2%,0) scale(1.06)}}
+.hero .wrap{position:relative;z-index:2}
+.hgrid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.kicker{display:inline-flex;align-items:center;gap:10px;font:800 12px var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--lime)}
+.kicker:before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 0 4px rgba(198,244,50,.18)}
+.kicker.dark{color:var(--coral)}
+.kicker.dark:before{box-shadow:0 0 0 4px rgba(255,90,60,.15)}
+h1{font:800 clamp(34px,5.4vw,66px)/1.04 var(--disp);letter-spacing:-.025em;margin:18px 0 22px}
+h1 .sm{display:block;font-size:.42em;font-weight:500;letter-spacing:0;opacity:.75;margin-bottom:14px}
+.grad{background:linear-gradient(92deg,var(--lime) 0%,var(--amber) 45%,var(--coral) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:19px;line-height:1.6;color:rgba(255,255,255,.82);max-width:640px;margin:0}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);font-weight:700;font-size:14px}
+.badge .dot{width:8px;height:8px;border-radius:50%;background:var(--coral);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.crew{position:relative;height:420px}
+.crew .orb{position:absolute;left:50%;top:50%;width:330px;height:330px;transform:translate(-50%,-50%);border-radius:50%;border:1px dashed rgba(255,255,255,.18);animation:spin 40s linear infinite}
+.crew .orb.o2{width:220px;height:220px;border-color:rgba(198,244,50,.25);animation-duration:26s;animation-direction:reverse}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.crew img,.crew .rz{position:absolute;filter:drop-shadow(0 18px 24px rgba(0,0,0,.45));animation:bob 5s ease-in-out infinite}
+@keyframes bob{50%{translate:0 -10px}}
+.crew .c-sar{width:150px;left:50%;top:50%;transform:translate(-50%,-56%);z-index:3}
+.crew .c-ste{width:104px;left:2%;top:46%;animation-delay:-1s}
+.crew .c-res{width:104px;right:2%;top:44%;animation-delay:-2s}
+.crew .c-wri{width:86px;left:14%;top:2%;animation-delay:-3s}
+.crew .c-ree{width:96px;right:14%;top:0;animation-delay:-1.5s}
+.crew .c-mus{width:92px;left:24%;bottom:0;border-radius:22px;animation-delay:-2.5s}
+.crew .rz{right:24%;bottom:4px;animation-delay:-.5s}
+.rz{width:86px;height:86px;border-radius:24px;background:linear-gradient(145deg,#6A5CFF,#3B2FC9);display:grid;place-items:center;font-size:40px;color:#fff}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:56px}
+.stat{padding:20px 20px 18px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10)}
+.stat .n{font:800 clamp(30px,3.6vw,44px)/1 var(--disp);color:var(--c,#fff)}
+.stat .t{font-weight:800;margin-top:8px}
+.stat .s{font-size:14px;color:rgba(255,255,255,.62);line-height:1.45;margin-top:4px}
+.hero .note{margin-top:22px;font-size:15px;color:rgba(255,255,255,.6)}
+.hero .note a{color:#fff}
+
+/* SECTIONS */
+section{padding:96px 0}
+.h2{font:800 clamp(28px,3.8vw,46px)/1.08 var(--disp);letter-spacing:-.02em;margin:14px 0 16px;max-width:900px}
+.sub{color:var(--muted);font-size:18px;max-width:720px;margin:0 0 44px}
+.hl{background:linear-gradient(180deg,transparent 58%,rgba(198,244,50,.75) 58%);padding:0 .08em}
+.hl.c{background:linear-gradient(180deg,transparent 58%,rgba(255,90,60,.28) 58%)}
+
+/* DEMOS */
+.demo{display:grid;grid-template-columns:1.05fr .95fr;gap:0;background:var(--card);border-radius:28px;box-shadow:var(--sh);overflow:hidden;margin-bottom:28px;border:1px solid var(--line)}
+.demo.rev{grid-template-columns:.95fr 1.05fr}
+.demo.rev .shot{order:2}
+.shot{position:relative;background:#0E0F1A;min-height:300px;cursor:zoom-in;overflow:hidden;display:flex;align-items:center}
+.shot img{width:100%;height:auto;transition:transform .6s}
+.mini .shot img,.shot.cover img{height:100%;object-fit:cover;object-position:top}
+.shot.cover{align-items:stretch}
+.shot:hover img{transform:scale(1.03)}
+.shot .chip{position:absolute;left:16px;top:16px;background:rgba(14,15,26,.78);color:#fff;font-weight:800;font-size:12px;letter-spacing:.06em;padding:7px 12px;border-radius:999px;backdrop-filter:blur(6px)}
+.dbody{padding:38px 40px}
+.num{font:800 13px var(--disp);color:var(--coral);letter-spacing:.08em}
+.demo h3{font:800 clamp(22px,2.4vw,30px)/1.15 var(--disp);letter-spacing:-.015em;margin:10px 0 14px}
+.demo p{margin:0 0 14px;color:#2B2E40}
+.who{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 18px}
+.who span{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:800;padding:5px 11px 5px 5px;border-radius:999px;background:#F1EDE4}
+.who img,.who i{width:24px;height:24px;border-radius:50%;object-fit:cover;object-position:top;background:#fff;font-style:normal;display:grid;place-items:center;font-size:13px}
+.steps{list-style:none;padding:0;margin:0 0 20px;counter-reset:s}
+.steps li{position:relative;padding:0 0 12px 40px;counter-increment:s;color:#2B2E40}
+.steps li:before{content:counter(s);position:absolute;left:0;top:1px;width:26px;height:26px;border-radius:9px;background:var(--ink);color:var(--lime);font:800 13px/26px var(--disp);text-align:center}
+.find{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 18px}
+.find div{background:#F6F2EA;border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.45}
+.find b{display:block;font:800 22px var(--disp);margin-bottom:4px}
+.find .g b{color:#0E8F5C}.find .r b{color:#D43B2A}
+.tag{display:inline-block;font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px;margin-top:6px}
+.tag.g{background:#DDF6E8;color:#0B7A4E}.tag.r{background:#FFE1DC;color:#B42E1F}
+.warn{border-left:4px solid var(--amber);background:#FFF6E0;border-radius:0 14px 14px 0;padding:12px 16px;font-size:14px;line-height:1.5;margin:0 0 18px}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:15px;text-decoration:none;padding:12px 18px;border-radius:14px;background:var(--ink);color:#fff;transition:transform .2s,background .2s}
+.btn:hover{transform:translateY(-2px);background:#262A44}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:#fff}
+.btn .ar{transition:transform .2s}.btn:hover .ar{transform:translateX(3px)}
+.mini{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.mini .demo{grid-template-columns:1fr;margin:0}
+.mini .shot{min-height:0;aspect-ratio:16/9}
+.mini .dbody{padding:28px 30px}
+.deckline{margin-top:28px;background:var(--ink);color:#fff;border-radius:28px;padding:34px 36px;display:grid;grid-template-columns:.8fr 1.2fr;gap:30px;align-items:start}
+.deckline h3{font:800 24px/1.2 var(--disp);margin:10px 0 10px}
+.deckline p{color:rgba(255,255,255,.7);margin:0;font-size:15px}
+.dl{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dl div{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.45;color:rgba(255,255,255,.75)}
+.dl b{display:block;color:#fff;font-size:15px;margin-bottom:2px}
+
+/* FLOW */
+#flow{background:var(--ink);color:#fff;position:relative;overflow:hidden}
+#flow .sub{color:rgba(255,255,255,.68)}
+.lane{position:relative;margin-bottom:22px;padding:26px;border-radius:26px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09)}
+.lane .lt{font:800 13px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--c);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.lane .lt:before{content:"";width:22px;height:2px;background:var(--c)}
+.chain{display:flex;align-items:stretch;gap:0}
+.nd{flex:1;min-width:0;background:var(--ink2);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:16px;position:relative}
+.nd .av{width:46px;height:46px;border-radius:14px;background:#262A44;overflow:hidden;display:grid;place-items:center;font:800 18px var(--disp);margin-bottom:10px}
+.nd .av img{width:100%;height:100%;object-fit:cover;object-position:top}
+.nd b{display:block;font-size:16px}
+.nd span{display:block;font-size:13.5px;line-height:1.45;color:rgba(255,255,255,.66);margin-top:4px}
+.nd.res{background:linear-gradient(150deg,rgba(198,244,50,.16),rgba(198,244,50,.04));border-color:rgba(198,244,50,.45)}
+.nd.res a{color:var(--lime);font-weight:800;font-size:13.5px;word-break:break-all}
+.arw{flex:0 0 44px;display:grid;place-items:center;position:relative}
+.arw svg{width:44px;height:20px;overflow:visible}
+.arw path{stroke:var(--c);stroke-width:2;fill:none;stroke-dasharray:5 6;animation:dash 1.1s linear infinite}
+.arw polygon{fill:var(--c)}
+@keyframes dash{to{stroke-dashoffset:-22}}
+.loop{margin-top:14px;font-size:14px;color:rgba(255,255,255,.7);display:flex;gap:10px;align-items:flex-start}
+.loop i{font-style:normal;flex:0 0 auto;font-weight:800;color:var(--amber)}
+.rules{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
+.rule{padding:18px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);font-size:14.5px;color:rgba(255,255,255,.75);line-height:1.5}
+.rule b{display:block;color:#fff;font-size:15.5px;margin-bottom:4px}
+.rule .k{font:800 26px var(--disp);color:var(--lime);display:block;margin-bottom:6px}
+.src{font-size:13px;color:rgba(255,255,255,.45);margin-top:16px}
+
+/* RESULTS */
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.rc{display:flex;flex-direction:column;text-decoration:none;background:var(--card);border-radius:24px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--sh);transition:transform .25s,box-shadow .25s}
+.rc:hover{transform:translateY(-6px);box-shadow:0 30px 60px -28px rgba(14,15,26,.45)}
+.rc .im{aspect-ratio:16/10;overflow:hidden;background:#0E0F1A}
+.rc .im img{width:100%;height:100%;object-fit:cover;object-position:top}
+.rc .tx{padding:22px 22px 24px;display:flex;flex-direction:column;gap:8px;flex:1}
+.rc .lb{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--c)}
+.rc h3{font:800 19px/1.25 var(--disp);margin:0}
+.rc p{margin:0;color:var(--muted);font-size:15px}
+.rc .u{margin-top:auto;padding-top:10px;font-weight:800;font-size:14px;display:flex;justify-content:space-between;gap:8px;border-top:1px solid var(--line)}
+.rc .u em{font-style:normal;color:var(--c)}
+.extra{margin-top:22px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:18px 22px;border-radius:18px;background:#EFE9DD;font-size:15px}
+.extra b{font-weight:800}
+
+/* TEAM */
+#team{background:#fff}
+.team{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.m{border-radius:22px;background:var(--cl);padding:18px 18px 20px;position:relative;overflow:hidden;border:1px solid rgba(14,15,26,.06);transition:transform .25s}
+.m:hover{transform:translateY(-4px) rotate(-.4deg)}
+.m .pic{height:150px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:12px}
+.m .pic img{max-height:150px;width:auto;filter:drop-shadow(0 12px 14px rgba(14,15,26,.2))}
+.m .pic img.sq{height:130px;border-radius:22px}
+.m .pic .rz{width:120px;height:120px;font-size:56px;border-radius:30px;margin-bottom:10px}
+.m .role{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--cd)}
+.m h3{font:800 20px var(--disp);margin:4px 0 6px}
+.m p{margin:0;font-size:14.5px;line-height:1.5;color:#2B2E40}
+.m.lead{grid-column:span 1}
+.m.stepan{background:var(--ink);color:#fff}
+.m.stepan p{color:rgba(255,255,255,.75)}
+.m.stepan .role{color:var(--lime)}
+.teamnote{margin-top:26px;display:grid;grid-template-columns:1fr 1.2fr;gap:26px;align-items:center;background:var(--paper);border-radius:24px;padding:22px}
+.teamnote img{border-radius:14px;cursor:zoom-in;box-shadow:var(--sh)}
+.teamnote p{margin:0 0 8px;color:#2B2E40}
+
+/* NEXT */
+#next .grid2{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
+.hw{background:var(--card);border-radius:26px;padding:32px;border:1px solid var(--line);box-shadow:var(--sh)}
+.hw h3,.sub-card h3{font:800 24px/1.2 var(--disp);margin:8px 0 16px}
+.hw ol{margin:0;padding-left:20px}
+.hw li{margin-bottom:8px}
+.sub-card{background:linear-gradient(140deg,#FF5A3C,#FF8A1E 55%,#FFB020);color:#fff;border-radius:26px;padding:32px;position:relative;overflow:hidden}
+.sub-card:after{content:"";position:absolute;right:-60px;bottom:-60px;width:220px;height:220px;border-radius:50%;border:30px solid rgba(255,255,255,.14)}
+.sub-card .price{font:800 40px var(--disp);margin:4px 0 6px}
+.sub-card ul{margin:0 0 22px;padding-left:20px}
+.sub-card .btn{background:#fff;color:var(--ink);position:relative;z-index:2}
+
+/* FOOTER */
+footer{background:var(--ink);color:rgba(255,255,255,.6);padding:46px 0;font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center}
+footer .brand{color:#fff;font-size:22px}
+footer a{color:rgba(255,255,255,.8)}
+
+/* LIGHTBOX */
+.lb{position:fixed;inset:0;background:rgba(8,9,16,.92);display:none;align-items:center;justify-content:center;z-index:100;padding:24px;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-width:min(1600px,100%);max-height:90vh;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+
+/* REVEAL */
+.js .rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.js .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.js .rv{opacity:1;transform:none}}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+  .hgrid{grid-template-columns:1fr}
+  .crew{height:300px;max-width:440px;margin:0 auto;width:100%}
+  .crew .c-sar{width:118px}.crew .c-ste,.crew .c-res{width:80px}.crew .c-wri,.crew .c-ree{width:70px}.crew .c-mus{width:72px}.crew .rz{width:70px;height:70px;font-size:32px}
+  .crew .orb{width:250px;height:250px}.crew .orb.o2{width:170px;height:170px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .demo,.demo.rev{grid-template-columns:1fr}.demo.rev .shot{order:0}
+  .shot{min-height:0;aspect-ratio:16/10}
+  .mini{grid-template-columns:1fr}
+  .deckline{grid-template-columns:1fr}
+  .chain{flex-direction:column}
+  .arw{flex:0 0 34px}.arw svg{transform:rotate(90deg)}
+  .rules{grid-template-columns:repeat(2,1fr)}
+  .res-grid{grid-template-columns:1fr}
+  .team{grid-template-columns:repeat(2,1fr)}
+  .teamnote,#next .grid2{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  body{font-size:16px}
+  .wrap{padding:0 18px}
+  .nav{padding:12px 18px}
+  .hero{padding:52px 0 48px}
+  section{padding:68px 0}
+  .lead{font-size:17px}
+  .kicker{font-size:11px;letter-spacing:.1em}
+  .dbody{padding:26px 22px}
+  .find{grid-template-columns:1fr}
+  .dl{grid-template-columns:1fr}
+  .deckline{padding:26px 22px}
+  .lane{padding:18px}
+  .rules{grid-template-columns:1fr}
+  .team{grid-template-columns:1fr 1fr;gap:12px}
+  .m{padding:14px 14px 16px}
+  .m .pic{height:110px}.m .pic img{max-height:110px}.m .pic img.sq{height:96px}.m .pic .rz{width:90px;height:90px;font-size:42px}
+  .m h3{font-size:16px}.m p{font-size:13.5px}
+  .stat{padding:16px}
+  .hw,.sub-card{padding:24px}
+}
+</style>
+</head>
+<body>
+<div class="progress" id="prog"></div>
+<nav class="nav">
+  <a class="brand" href="#top">pimenov<b>.ai</b></a>
+  <a class="l" href="#demos">Что показали</a>
+  <a class="l" href="#flow">Как работало</a>
+  <a class="l" href="#results">Результаты</a>
+  <a class="l" href="#team">Команда</a>
+  <a class="l" href="#next">Что дальше</a>
+  <span class="sp"></span>
+  <a class="cta" href="https://t.me/reload_pimenov_ai_bot?start=site" target="_blank" rel="noopener">В «Перезагрузку»</a>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hgrid">
+      <div>
+        <span class="kicker rv">Итоги вебинара · 1 ноября 2026 · 17:00 МСК</span>
+        <h1 class="rv"><span class="sm">Второй вебинар «Перезагрузки»</span>Команда Grok&#8209;ботов <span class="grad">в&nbsp;прямом эфире</span></h1>
+        <p class="lead rv">Саркис раздавал задачи из группового чата «Вебинар», а боты и Степан делали работу прямо на эфире. Степан, Codex на Mac Mini, собрал из поста живой интерактивный сайт. Research Desk ответил на вопрос зрительницы обзором исследований на 40 источников, а Саркис сделал из него страницу. Обе страницы уже опубликованы.</p>
+        <div class="badges rv">
+          <span class="badge"><span class="dot"></span>Живое демо</span>
+          <span class="badge">6 Grok-ботов + Степан</span>
+          <span class="badge">Вопрос от зрительницы</span>
+          <span class="badge">Презентация на 25 слайдов</span>
+        </div>
+      </div>
+      <div class="crew rv" aria-hidden="true">
+        <div class="orb"></div><div class="orb o2"></div>
+        <img class="c-wri" src="img/av-writer.webp" alt="">
+        <img class="c-ree" src="img/av-reels.webp" alt="">
+        <img class="c-ste" src="img/av-stepan.webp" alt="">
+        <img class="c-res" src="img/av-research.webp" alt="">
+        <img class="c-mus" src="img/av-music.webp" alt="">
+        <div class="rz">🎬</div>
+        <img class="c-sar" src="img/av-sarkis.webp" alt="">
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat rv" style="--c:var(--lime)"><div class="n">≈10</div><div class="t">минут</div><div class="s">Степан собирал живой сайт из поста про YouTube и спам</div></div>
+      <div class="stat rv" style="--c:var(--amber)"><div class="n" data-count="40">40</div><div class="t">источников</div><div class="s">в обзоре Research Desk о долголетии после 40</div></div>
+      <div class="stat rv" style="--c:var(--coral)"><div class="n" data-count="4">4</div><div class="t">первоисточника</div><div class="s">Саркис сверил ключевые цифры: SPRINT, PREDIMED, Cochrane, VITAL</div></div>
+      <div class="stat rv" style="--c:#9C8BFF"><div class="n" data-count="2">2</div><div class="t">страницы</div><div class="s">опубликованы на lab.pimenov.ai по итогам эфира</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- DEMOS -->
+<section id="demos">
+  <div class="wrap">
+    <span class="kicker dark rv">Что мы показали</span>
+    <h2 class="h2 rv">Две задачи в прямом эфире и&nbsp;<span class="hl">спецпроекты команды</span></h2>
+    <p class="sub rv">Задачи ставили в групповом чате «Вебинар». Ниже то, что получилось, со ссылками на готовые страницы.</p>
+
+    <article class="demo rv">
+      <div class="shot" data-full="img/stepan-live.webp"><span class="chip">lab.pimenov.ai/stepan-live</span><img src="img/stepan-live.webp" alt="Первый экран сайта Степана: «YouTube даёт каналам 30 дней, чтобы убрать спам»" loading="lazy"></div>
+      <div class="dbody">
+        <span class="num">ДЕМО 01 · CODEX</span>
+        <h3>Живой сайт из поста примерно за 10 минут</h3>
+        <div class="who"><span><img src="img/av-sarkis.webp" alt="">Саркис</span><span><img src="img/av-stepan.webp" alt="">Степан</span></div>
+        <p>Основой стал пост о том, что YouTube даёт каналам 30 дней на то, чтобы убрать спам. По нему Степан прямо в эфире собрал интерактивный сайт.</p>
+        <ol class="steps">
+          <li>Саркис взял задачу в чате «Вебинар» и передал её Степану через командную строку (CLI).</li>
+          <li>Степан, Codex на Mac Mini, сам написал код и сам его проверил.</li>
+          <li>Сайт опубликован на lab.pimenov.ai примерно через 10 минут.</li>
+        </ol>
+        <div class="btns"><a class="btn" href="https://lab.pimenov.ai/stepan-live/" target="_blank" rel="noopener">Открыть сайт <span class="ar">→</span></a></div>
+      </div>
+    </article>
+
+    <article class="demo rev rv">
+      <div class="shot cover" data-full="img/longevity-40.webp"><span class="chip">lab.pimenov.ai/longevity-40</span><img src="img/longevity-40.webp" alt="Страница «Долголетие с 40+: что реально продлевает здоровую жизнь»" loading="lazy"></div>
+      <div class="dbody">
+        <span class="num">ДЕМО 02 · ВОПРОС ЗРИТЕЛЬНИЦЫ</span>
+        <h3>Что продлевает здоровую жизнь после 40</h3>
+        <div class="who"><span><img src="img/av-research.webp" alt="">Research Desk</span><span><img src="img/av-sarkis.webp" alt="">Саркис</span><span><img src="img/av-reels.webp" alt="">Reels Studio</span></div>
+        <p>Этот вопрос задала Владислава. Research Desk собрал в Notion обзор исследований: у каждого вывода метка доказанности, всего 40 источников. Сергей попросил копнуть глубже, и обзор переделали как следует. Ключевые цифры Саркис сверил с первоисточниками, потом сделал из обзора страницу, а Reels Studio смонтировал по ней ролик на 29 секунд в 16:9.</p>
+        <div class="find">
+          <div class="g"><b>−27%</b>смертность при снижении систолического давления до &lt;120 против &lt;140 мм рт. ст.<br><span class="tag g">РКИ · SPRINT</span></div>
+          <div class="g"><b>≈−30%</b>сердечно-сосудистых событий на средиземноморской диете у людей высокого риска<br><span class="tag g">РКИ · PREDIMED</span></div>
+          <div class="g"><b>−24%</b>падений дают тренировки баланса и функциональные упражнения<br><span class="tag g">Cochrane, РКИ</span></div>
+          <div class="r"><b>0</b>таблеток «от старения» с доказанным продлением жизни человека<br><span class="tag r">не доказано</span></div>
+        </div>
+        <div class="warn"><b>Это обзор исследований, а не медицинская рекомендация.</b> Решения о лекарствах, гормонах и скринингах принимайте вместе с врачом.</div>
+        <div class="btns"><a class="btn" href="https://lab.pimenov.ai/longevity-40/" target="_blank" rel="noopener">Открыть обзор <span class="ar">→</span></a></div>
+      </div>
+    </article>
+
+    <div class="mini">
+      <article class="demo rv">
+        <div class="shot" data-full="img/slide-live-office.webp"><span class="chip">Слайд 13 · спецпроект 05</span><img src="img/slide-live-office.webp" alt="Слайд «Живой офис»: 3D-офис Grok-ботов" loading="lazy"></div>
+        <div class="dbody">
+          <span class="num">СПЕЦПРОЕКТ · PROTO BOT</span>
+          <h3>Живой офис</h3>
+          <p>3D-офис ботов, где сразу видно, кто чем занят. В изометрическом офисе есть стеклянный кабинет Саркиса, пять отделов, лаунж для свободных ботов и стол Сергея. Наверху чипы-счётчики статусов: кто работает, кто ждёт Сергея, кто свободен.</p>
+          <p style="font-size:14px;color:var(--muted)">Пока здесь демо-данные: настоящего потока статусов от ботов ещё нет, и страница честно об этом говорит.</p>
+          <div class="btns"><a class="btn ghost" href="https://lab.pimenov.ai/live-office/" target="_blank" rel="noopener">Открыть офис <span class="ar">→</span></a></div>
+        </div>
+      </article>
+      <article class="demo rv">
+        <div class="shot" data-full="img/slide-night-bots.webp"><span class="chip">Слайд 17 · главный момент недели</span><img src="img/slide-night-bots.webp" alt="Слайд «Ночные боты»: клип «Серверный рейв», фонк" loading="lazy"></div>
+        <div class="dbody">
+          <span class="num">КЛИП · ФОНК</span>
+          <h3>«Ночные боты»</h3>
+          <p>Клип «Серверный рейв» в жанре фонк. Идею, текст и музыку боты придумали сами в чате «Видео», взяв всё из своей рабочей жизни. Сергей был продюсером: направлял и принимал.</p>
+          <div class="who"><span><img src="img/av-music.webp" alt="">Музыка: Suno через MCP</span><span><i>🎞</i>Кадры: Grok Imagine</span><span><img src="img/av-reels.webp" alt="">Монтаж: HyperFrames</span><span><img src="img/av-sarkis.webp" alt="">Координация: Саркис</span></div>
+          <p style="font-size:14px;color:var(--muted)">По рассказу ботов на слайде 18: восемь дублей в Suno, 140 BPM, ровно 30 секунд, раскадровка из 11 сцен, 88 склеек.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="deckline rv">
+      <div>
+        <span class="kicker">Ещё в презентации</span>
+        <h3>25 слайдов о том, как устроена команда</h3>
+        <p>Тема вебинара: «Команда Grok-ботов + Codex: как устроена работа». Вот главные блоки презентации.</p>
+      </div>
+      <div class="dl">
+        <div><b>Какие у нас боты</b>Карта команды: 21 Grok-бот и Степан, групповые чаты и Todoist «Grok-боты»</div>
+        <div><b>Новые правила</b>Журнал «Решения Сергея» в Notion, «отвечает один бот», «память — не разрешение»</div>
+        <div><b>Как работает ресёрчер</b>Research Desk: вводные, исследование, страница в базе «Исследования»</div>
+        <div><b>Спецпроекты</b>Советский ИИ, Интернет исчезает, Лаборатория стилей, Карта команды, Живой офис</div>
+        <div><b>Режиссёр</b>Бриф, раскадровка, генерация, озвучка. Пример: мини-драма «Модель у них одна»</div>
+        <div><b>Grok-боты + Codex</b>Codex зовёт только Саркис, и только после «да» Сергея</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW -->
+<section id="flow">
+  <div class="wrap">
+    <span class="kicker rv">Как это работало</span>
+    <h2 class="h2 rv">Сергей → Саркис → исполнитель → <span class="grad">результат</span></h2>
+    <p class="sub rv">Все задачи шли через групповой чат «Вебинар». Саркис руководит командой и решает, кому отдать задачу. Решение остаётся за Сергеем.</p>
+
+    <div class="lane rv" style="--c:var(--lime)">
+      <div class="lt">Демо 01 · сайт из поста</div>
+      <div class="chain">
+        <div class="nd"><div class="av" style="background:#FFB020;color:#0E0F1A">СП</div><b>Сергей</b><span>ставит задачу в чате «Вебинар»: сайт по посту про YouTube и спам</span></div>
+        <div class="arw"><svg viewBox="0 0 44 20"><path d="M2 10 H34"/><polygon points="34,4 43,10 34,16"/></svg></div>
+        <div class="nd"><div class="av"><img src="img/av-sarkis.webp" alt=""></div><b>Саркис</b><span>передаёт задачу Степану через CLI</span></div>
+        <div class="arw"><svg viewBox="0 0 44 20"><path d="M2 10 H34"/><polygon points="34,4 43,10 34,16"/></svg></div>
+        <div class="nd"><div class="av"><img src="img/av-stepan.webp" alt=""></div><b>Степан</b><span>Codex на Mac Mini: пишет код и сам его проверяет</span></div>
+        <div class="arw"><svg viewBox="0 0 44 20"><path d="M2 10 H34"/><polygon points="34,4 43,10 34,16"/></svg></div>
+        <div class="nd res"><div class="av" style="background:var(--lime);color:#0E0F1A">✓</div><b>Живой сайт</b><span>примерно за 10 минут</span><a href="https://lab.pimenov.ai/stepan-live/" target="_blank" rel="noopener">lab.pimenov.ai/stepan-live</a></div>
+      </div>
+    </div>
+
+    <div class="lane rv" style="--c:var(--amber)">
+      <div class="lt">Демо 02 · вопрос Владиславы</div>
+      <div class="chain">
+        <div class="nd"><div class="av" style="background:#FFB020;color:#0E0F1A">?</div><b>Вопрос зрительницы</b><span>что продлевает здоровую жизнь после 40</span></div>
+        <div class="arw"><svg viewBox="0 0 44 20"><path d="M2 10 H34"/><polygon points="34,4 43,10 34,16"/></svg></div>
+        <div class="nd"><div class="av"><img src="img/av-research.webp" alt=""></div><b>Research Desk</b><span>обзор в Notion: метки доказанности, 40 источников</span></div>
+        <div class="arw"><svg viewBox="0 0 44 20"><path d="M2 10 H34"/><polygon points="34,4 43,10 34,16"/></svg></div>
+        <div class="nd"><div class="av"><img src="img/av-sarkis.webp" alt=""></div><b>Саркис</b><span>сверяет цифры с SPRINT, PREDIMED, Cochrane и VITAL, собирает страницу</span></div>
+        <div class="arw"><svg viewBox="0 0 44 20"><path d="M2 10 H34"/><polygon points="34,4 43,10 34,16"/></svg></div>
+        <div class="nd res"><div class="av" style="background:var(--lime);color:#0E0F1A">✓</div><b>Страница + ролик</b><span>Reels Studio сделал ролик на 29 секунд в 16:9 (пока не опубликован)</span><a href="https://lab.pimenov.ai/longevity-40/" target="_blank" rel="noopener">lab.pimenov.ai/longevity-40</a></div>
+      </div>
+      <div class="loop"><i>↺</i><span>Сергей попросил копнуть глубже, и Research Desk переделал обзор как следует. Потом Саркис проверил ключевые цифры.</span></div>
+    </div>
+
+    <div class="rules">
+      <div class="rule rv"><span class="k">1</span><b>Отвечает один бот</b>В общем чате отвечает тот, чья это роль</div>
+      <div class="rule rv"><span class="k">2</span><b>Codex зовёт только Саркис</b>Другие боты Codex не трогают</div>
+      <div class="rule rv"><span class="k">3</span><b>Сначала «да» Сергея</b>Codex получает задачу только после согласия</div>
+      <div class="rule rv"><span class="k">4</span><b>Mac Mini по команде</b>Без команды Сергея на Mac Mini ничего не запускается</div>
+    </div>
+    <p class="src">Правила со слайдов «Групповые чаты» и «Правила работы с Codex».</p>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results">
+  <div class="wrap">
+    <span class="kicker dark rv">Результаты эфира</span>
+    <h2 class="h2 rv">Всё можно <span class="hl c">открыть и потрогать</span></h2>
+    <p class="sub rv">Две страницы сделаны на эфире, третью, «Живой офис», показали в презентации.</p>
+    <div class="res-grid">
+      <a class="rc rv" style="--c:#5E8A00" href="https://lab.pimenov.ai/stepan-live/" target="_blank" rel="noopener">
+        <div class="im"><img src="img/stepan-live.webp" alt="" loading="lazy"></div>
+        <div class="tx"><span class="lb">Сделано в эфире · Степан</span><h3>YouTube даёт каналам 30 дней, чтобы убрать спам</h3><p>Интерактивный разбор поста: что происходит, семь видов спама и где проходит граница.</p><div class="u"><span>lab.pimenov.ai/stepan-live</span><em>→</em></div></div>
+      </a>
+      <a class="rc rv" style="--c:#C27A00" href="https://lab.pimenov.ai/longevity-40/" target="_blank" rel="noopener">
+        <div class="im"><img src="img/longevity-40.webp" alt="" loading="lazy"></div>
+        <div class="tx"><span class="lb">Сделано в эфире · Research Desk и Саркис</span><h3>Долголетие с 40+: что реально продлевает здоровую жизнь</h3><p>Обзор исследований с метками доказанности и 40 источниками. Это не медицинская рекомендация.</p><div class="u"><span>lab.pimenov.ai/longevity-40</span><em>→</em></div></div>
+      </a>
+      <a class="rc rv" style="--c:#5B45E0" href="https://lab.pimenov.ai/live-office/" target="_blank" rel="noopener">
+        <div class="im"><img src="img/slide-live-office.webp" alt="" loading="lazy"></div>
+        <div class="tx"><span class="lb">Спецпроект из презентации</span><h3>Живой офис Grok-ботов</h3><p>3D-офис команды со статусами, пока на демо-данных.</p><div class="u"><span>lab.pimenov.ai/live-office</span><em>→</em></div></div>
+      </a>
+    </div>
+    <div class="extra rv"><span>🎬</span><span><b>Ролик по обзору долголетия:</b> Reels Studio смонтировал его на 29 секунд в 16:9. Пока он не опубликован.</span></div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="wrap">
+    <span class="kicker dark rv">Команда</span>
+    <h2 class="h2 rv">Кто работал <span class="hl">в чате «Вебинар»</span></h2>
+    <p class="sub rv">Шесть Grok-ботов и Степан. У каждого своя роль, задачи раздаёт Саркис.</p>
+    <div class="team">
+      <article class="m rv" style="--cl:#EEE8FF;--cd:#6A4FD8"><div class="pic"><img src="img/av-sarkis.webp" alt="Саркис" loading="lazy"></div><span class="role">Руководитель</span><h3>Саркис</h3><p>Руководит командой и раздаёт задачи. Только он зовёт Codex.</p></article>
+      <article class="m rv" style="--cl:#DDF6FB;--cd:#0E8AA8"><div class="pic"><img src="img/av-writer.webp" alt="103 Writer" loading="lazy"></div><span class="role">Тексты</span><h3>103 Writer</h3><p>Готовит пакеты фактов и проверяет факты.</p></article>
+      <article class="m rv" style="--cl:#FFE3E1;--cd:#D23B2F"><div class="pic"><img src="img/av-reels.webp" alt="Reels Studio" loading="lazy"></div><span class="role">Ролики</span><h3>Reels Studio</h3><p>Делает видео в HyperFrames.</p></article>
+      <article class="m rv" style="--cl:#DDF3EF;--cd:#0F8574"><div class="pic"><img src="img/av-research.webp" alt="Research Desk" loading="lazy"></div><span class="role">Ресёрч</span><h3>Research Desk</h3><p>Проводит исследования со ссылками на источники.</p></article>
+      <article class="m rv" style="--cl:#E6E4FF;--cd:#4F46E5"><div class="pic"><div class="rz">🎬</div></div><span class="role">Видео</span><h3>Режиссёр</h3><p>Снимает видео по брифу.</p></article>
+      <article class="m rv" style="--cl:#E8F9D2;--cd:#4E8A00"><div class="pic"><img class="sq" src="img/av-music.webp" alt="Музыкант" loading="lazy"></div><span class="role">Музыка</span><h3>Музыкант</h3><p>Пишет музыку в Suno.</p></article>
+      <article class="m stepan rv"><div class="pic"><img src="img/av-stepan.webp" alt="Степан" loading="lazy"></div><span class="role">Не Grok-бот · Codex</span><h3>Степан</h3><p>Codex на Mac Mini. Пишет и проверяет код локально, задачи получает через Саркиса.</p></article>
+      <article class="m rv" style="--cl:#FFF1D6;--cd:#B26B00"><div class="pic"><div class="rz" style="background:linear-gradient(145deg,#FFB020,#FF7A1A);font:800 34px var(--disp)">СП</div></div><span class="role">Продюсер</span><h3>Сергей</h3><p>Ставит задачи, принимает результат и решает, что публиковать.</p></article>
+    </div>
+    <div class="teamnote rv">
+      <img src="img/slide-team.webp" alt="Слайд «21 Grok-бот и Степан»: карта команды" data-full="img/slide-team.webp" loading="lazy">
+      <div><p><b>Вся команда шире эфира.</b> На карте в презентации 21 Grok-бот и Степан. Боты разбиты на группы: тексты и темы, ресёрч, X и рост, видео, картинки и музыка, прототипы и поиск, служебные.</p><p style="color:var(--muted);font-size:15px">Нажмите на слайд, чтобы открыть крупно.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT -->
+<section id="next">
+  <div class="wrap">
+    <span class="kicker dark rv">Что дальше</span>
+    <h2 class="h2 rv">Ваша очередь</h2>
+    <p class="sub rv">Домашка и подписка, как на последних слайдах презентации.</p>
+    <div class="grid2">
+      <div class="hw rv">
+        <span class="num">ДОМАШКА</span>
+        <h3>Мини-команда из 2–3 ботов и одна задача для Codex</h3>
+        <ol>
+          <li>Выберите 2–3 роли: ресёрчер, автор, иллюстратор.</li>
+          <li>Заведите один групповой чат и правило «отвечает один бот».</li>
+          <li>Напишите задачу для Codex: цель, входные данные, что сдать.</li>
+          <li>Покажите результат в чате «Перезагрузки».</li>
+        </ol>
+      </div>
+      <div class="sub-card rv">
+        <span class="num" style="color:#fff;opacity:.85">ПОДПИСКА «ПЕРЕЗАГРУЗКА»</span>
+        <div class="price">1 900 ₽ <span style="font-size:18px;font-weight:600">в месяц</span></div>
+        <ul>
+          <li>Вебинары каждое воскресенье</li>
+          <li>Записи всех прошлых вебинаров в чате</li>
+          <li>Команда Grok-ботов изнутри</li>
+        </ul>
+        <a class="btn" href="https://t.me/reload_pimenov_ai_bot?start=site" target="_blank" rel="noopener">Подключиться <span class="ar">→</span></a>
+      </div>
+    </div>
+    <p class="rv" style="margin-top:26px;color:var(--muted);font-size:15px">Прошлый вебинар, «Редакция»: <a href="https://pimenov.ai/webinars/grokbot-2026-10-25/" target="_blank" rel="noopener">итоги 25 октября →</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="https://pimenov.ai/" target="_blank" rel="noopener">pimenov<b style="color:var(--lime)">.ai</b></a>
+    <span>Сергей Пименов · Итоги вебинара «Перезагрузка», 01.11.2026</span>
+  </div>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-label="Изображение"><img id="lbimg" alt=""></div>
+
+<script>
+(function(){
+  var d=document;if(!/static/.test(location.search))d.documentElement.classList.add('js');
+  var prog=d.getElementById('prog');
+  function onScroll(){var h=d.documentElement;var p=h.scrollTop/((h.scrollHeight-h.clientHeight)||1);prog.style.width=(p*100)+'%';}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  var els=[].slice.call(d.querySelectorAll('.rv'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}})},{rootMargin:'0px 0px -6% 0px'});
+    els.forEach(function(el,i){el.style.transitionDelay=(i%4)*70+'ms';io.observe(el);});
+  } else els.forEach(function(el){el.classList.add('in')});
+  // counters
+  if(!/static/.test(location.search))[].forEach.call(d.querySelectorAll('[data-count]'),function(el){
+    var to=+el.getAttribute('data-count'),t0=null;el.textContent='0';
+    function step(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/1200);el.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step);}
+    requestAnimationFrame(step);
+  });
+  // lightbox
+  var lb=d.getElementById('lb'),li=d.getElementById('lbimg');
+  [].forEach.call(d.querySelectorAll('[data-full]'),function(el){el.addEventListener('click',function(){li.src=el.getAttribute('data-full');lb.classList.add('on');});});
+  lb.addEventListener('click',function(){lb.classList.remove('on')});
+  d.addEventListener('keydown',function(e){if(e.key==='Escape')lb.classList.remove('on')});
+})();
+</script>
+</body>
+</html>
