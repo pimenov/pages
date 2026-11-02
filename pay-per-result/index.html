@@ -44,7 +44,28 @@
     <link rel="shortcut icon" href="/pay-per-result/favicon.ico" />
     <script type="module" crossorigin src="/pay-per-result/assets/index-Zv-7PPsl.js"></script>
     <link rel="stylesheet" crossorigin href="/pay-per-result/assets/index-BME51SSC.css">
-  </head>
+  <style id="lab-reload-css">
+.lab-reload{display:flex;align-items:center;gap:12px;width:100%;max-width:640px;margin:0 0 10px;padding:10px 10px 10px 12px;border:1px solid var(--lab-tg-border,#d6ddeb);border-radius:8px;background:var(--lab-tg-bg,#f4f7fc);color:var(--lab-tg-title,#08090c);font-family:"SF Pro Display","Inter",-apple-system,BlinkMacSystemFont,system-ui,"Segoe UI",sans-serif;font-size:15px;line-height:1.3;letter-spacing:normal;text-align:left;box-sizing:border-box;position:relative;z-index:5}
+.lab-reload *,.lab-reload *::before,.lab-reload *::after{box-sizing:border-box}
+.lab-reload__icon{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:50%;background:var(--lab-tg-icon-bg,#3d69e7);color:var(--lab-tg-icon-fg,#fff)}
+.lab-reload__icon svg{display:block;width:18px;height:18px}
+.lab-reload__text{display:flex;flex-direction:column;gap:1px;min-width:180px;flex:1 1 auto;margin:0}
+.lab-reload__title{margin:0;color:var(--lab-tg-title,#08090c);font-weight:650;font-size:15px;line-height:1.25}
+.lab-reload__sub{margin:0;color:var(--lab-tg-text,#5b6580);font-size:13px;line-height:1.3}
+.lab-reload__btn,.lab-reload__btn:visited{display:inline-flex;align-items:center;justify-content:center;flex:none;min-height:40px;padding:8px 16px;border:1px solid var(--lab-tg-btn-border,#3d69e7);border-radius:4px;background:var(--lab-tg-btn-bg,#3d69e7);color:var(--lab-tg-btn-fg,#fff);font:inherit;font-weight:600;font-size:15px;line-height:1.2;text-decoration:none;text-align:center;white-space:normal;max-width:260px;transition:background .16s ease-out}
+.lab-reload__btn:hover{background:var(--lab-tg-btn-hover,#2f58cf);color:var(--lab-tg-btn-fg,#fff);text-decoration:none}
+.lab-reload__btn:focus-visible{outline:3px solid var(--lab-tg-focus,#3d69e7);outline-offset:3px}
+@media(max-width:600px){.lab-reload{flex-wrap:wrap}.lab-reload__text{flex:1 1 calc(100% - 50px)}.lab-reload__btn{flex:1 1 100%;max-width:none;min-height:42px}}
+</style>
+<script id="lab-reload-js">
+(function(){var H='<span class="lab-reload__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v4.5h-4.5"/></svg></span><span class="lab-reload__text"><span class="lab-reload__title">Подписка «Перезагрузка»</span><span class="lab-reload__sub">Вебинары каждое воскресенье и команда Grok-ботов изнутри</span></span><a class="lab-reload__btn" href="https://t.me/reload_pimenov_ai_bot" target="_blank" rel="noopener">Подписаться на «Перезагрузку» за&nbsp;1900&nbsp;₽ в&nbsp;месяц</a>';
+function place(){var tg=document.querySelector('aside.lab-tg');if(!tg)return;var prev=tg.previousElementSibling;if(prev&&prev.classList&&prev.classList.contains('lab-reload'))return;
+var old=document.querySelector('.lab-reload');if(old&&old.parentNode)old.parentNode.removeChild(old);
+var a=document.createElement('aside');a.className='lab-reload';a.setAttribute('aria-label','Подписка «Перезагрузка»');a.innerHTML=H;tg.parentNode.insertBefore(a,tg);}
+function start(){place();new MutationObserver(place).observe(document.body,{childList:true,subtree:true});}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();})();
+</script>
+</head>
   <body>
     <div id="root"></div>
   </body>
