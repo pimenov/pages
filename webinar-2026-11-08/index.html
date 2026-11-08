@@ -57,6 +57,11 @@ h1 .sm{display:block;font-size:.42em;font-weight:500;letter-spacing:0;opacity:.7
 @keyframes pulse{50%{opacity:.25}}
 .hero-pixel{display:flex;justify-content:center;align-items:center}
 .hero-pixel img{width:min(100%,280px);height:auto;border-radius:28px;border:1px solid rgba(255,255,255,.14);box-shadow:0 24px 60px rgba(0,0,0,.45);cursor:zoom-in}
+.hero-actions{margin-top:26px}
+.hero .btn.lime{background:var(--lime);color:var(--ink)}
+.hero .btn.lime:hover{background:#d6ff55;color:var(--ink)}
+.hero .btn.ghost{color:#fff;border-color:rgba(255,255,255,.55);background:transparent}
+.hero .btn.ghost:hover{background:#fff;color:var(--ink)}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:56px}
 .stat{padding:20px 20px 18px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10)}
 .stat .n{font:800 clamp(30px,3.6vw,44px)/1 var(--disp);color:var(--c,#fff)}
@@ -108,6 +113,8 @@ section{padding:96px 0}
 .deckline{margin-top:28px;background:var(--ink);color:#fff;border-radius:28px;padding:34px 36px;display:grid;grid-template-columns:.8fr 1.2fr;gap:30px;align-items:start}
 .deckline h3{font:800 24px/1.2 var(--disp);margin:10px 0 10px}
 .deckline p{color:rgba(255,255,255,.7);margin:0 0 10px;font-size:15px}
+.deckline .btn{background:var(--lime);color:var(--ink);margin-top:8px}
+.deckline .btn:hover{background:#d6ff55;color:var(--ink)}
 .dl{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .dl div{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.45;color:rgba(255,255,255,.75)}
 .dl b{display:block;color:#fff;font-size:15px;margin-bottom:2px}
@@ -272,6 +279,7 @@ footer a{color:rgba(255,255,255,.8)}
   <a class="l" href="#results">Результаты</a>
   <a class="l" href="#team">Команда</a>
   <a class="l" href="#next">Что дальше</a>
+  <a class="l" href="./deck/">Презентация</a>
   <span class="sp"></span>
   <a class="cta" href="https://t.me/reload_pimenov_ai_bot?start=site" target="_blank" rel="noopener">В «Перезагрузку»</a>
 </nav>
@@ -284,6 +292,10 @@ footer a{color:rgba(255,255,255,.8)}
         <span class="kicker rv">Итоги вебинара · 8 ноября 2026</span>
         <h1 class="rv"><span class="sm">Что мы с этим сделали — и как собрали рилсы с Пикселем</span>Grok Bot классный, <span class="grad">но жрёт лимиты</span></h1>
         <p class="lead rv">Короткие инструкции, меньше шума в чатах и код для повторяющейся работы. А потом — практика: поиск рилса, свой сюжет, голос и анимация. Главный герой — Пиксель, мой бостон-терьер. Теперь он ещё и объясняет, как экономить лимиты.</p>
+        <div class="btns hero-actions rv">
+          <a class="btn lime" href="./deck/">Презентация <span class="ar">→</span></a>
+          <a class="btn ghost" href="#demos">Итоги <span class="ar">→</span></a>
+        </div>
         <div class="badges rv">
           <span class="badge">Экономия лимитов</span>
           <span class="badge">Команда ботов</span>
@@ -391,6 +403,7 @@ footer a{color:rgba(255,255,255,.8)}
         <span class="kicker">Ещё в презентации</span>
         <h3>Как устроена команда</h3>
         <p>Темы презентации о том, как устроена команда.</p>
+        <div class="btns"><a class="btn" href="./deck/">Открыть презентацию <span class="ar">→</span></a></div>
       </div>
       <div class="dl">
         <div><b>Одна задача — один ответственный</b>Обсуждение и результат остаются в комментариях Todoist</div>
