@@ -2,8 +2,19 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function () {
+        var ok = { light: 1, dark: 1, cyberpunk: 1 };
+        var theme = "light";
+        try {
+          var saved = localStorage.getItem("lab-theme");
+          if (ok[saved]) theme = saved;
+        } catch (e) {}
+        document.documentElement.setAttribute("data-theme", theme);
+        document.documentElement.style.colorScheme = theme === "dark" ? "dark" : "light";
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex, nofollow" />
     <meta name="description" content="Пьеса Шварца «Дракон» и фильм Захарова «Убить дракона»: хронология запретов, съёмки, цитаты и текст для поста." />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <title>Убить дракона — pimenov.ai</title>
@@ -12,6 +23,12 @@
     </script>
     <script type="module" crossorigin src="/ubit-drakona/assets/index-C5xZLd3-.js"></script>
     <link rel="stylesheet" crossorigin href="/ubit-drakona/assets/index-DzESkrXh.css">
-  </head>
+    <meta property="og:image" content="https://lab.pimenov.ai/ubit-drakona/og.jpg">
+    <meta property="og:image:width" content="1600">
+    <meta property="og:image:height" content="900">
+    <meta property="og:image:type" content="image/jpeg">
+    <link rel="stylesheet" href="/lab-chrome/lab-chrome.css">
+    <script src="/lab-chrome/lab-chrome.js" defer></script>
+</head>
   <body><div id="root"></div></body>
 </html>

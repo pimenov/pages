@@ -1,42 +1,59 @@
-/* lab.pimenov.ai: общий блок Telegram и переключатель трёх тем.
-   Палитра cyberpunk повторяет :root[data-theme=cyberpunk] с pimenov.ai (Layout.css). */
+/* lab.pimenov.ai: общая шапка, подвал, блоки подписки и переключатель тем.
+   Палитра cyberpunk повторяет :root[data-theme=cyberpunk] с pimenov.ai. */
 :root {
   --lab-tg-bg: #f4f7fc;
   --lab-tg-border: #d6ddeb;
   --lab-tg-title: #08090c;
   --lab-tg-text: #5b6580;
-  --lab-tg-icon-bg: #3d69e7;
+  --lab-tg-icon-bg: #24613e;
   --lab-tg-icon-fg: #fff;
-  --lab-tg-btn-bg: #3d69e7;
-  --lab-tg-btn-hover: #2f58cf;
+  --lab-tg-btn-bg: #24613e;
+  --lab-tg-btn-hover: #1a4a2e;
   --lab-tg-btn-fg: #fff;
-  --lab-tg-btn-border: #3d69e7;
-  --lab-tg-focus: #3d69e7;
+  --lab-tg-btn-border: #24613e;
+  --lab-tg-focus: #24613e;
   --lab-sw-border: #d6ddeb;
   --lab-sw-bg: #fff;
   --lab-sw-fg: #5b6580;
   --lab-sw-hover: #08090c;
-  --lab-sw-on-bg: #3d69e7;
+  --lab-sw-on-bg: #24613e;
   --lab-sw-on-fg: #fff;
+  --lab-bar-h: 56px;
+  --lab-bar-bg: #f8f9f6;
+  --lab-bar-fg: #202820;
+  --lab-bar-muted: #525e52;
+  --lab-bar-border: #d9ded6;
+  --lab-foot-bg: #f1f3ee;
+  --lab-foot-fg: #525e52;
+  --lab-foot-link: #202820;
+  --lab-foot-border: #d9ded6;
 }
 :root[data-theme="dark"] {
-  --lab-tg-bg: #12151e;
-  --lab-tg-border: rgba(214, 221, 235, 0.18);
-  --lab-tg-title: #f4f6fb;
-  --lab-tg-text: #a7b1c7;
-  --lab-tg-icon-bg: #8eafff;
-  --lab-tg-icon-fg: #07080d;
-  --lab-tg-btn-bg: #8eafff;
-  --lab-tg-btn-hover: #a9c2ff;
-  --lab-tg-btn-fg: #07080d;
-  --lab-tg-btn-border: #8eafff;
-  --lab-tg-focus: #8eafff;
-  --lab-sw-border: rgba(214, 221, 235, 0.22);
-  --lab-sw-bg: #12151e;
-  --lab-sw-fg: #a7b1c7;
-  --lab-sw-hover: #f4f6fb;
-  --lab-sw-on-bg: #8eafff;
-  --lab-sw-on-fg: #07080d;
+  --lab-tg-bg: #151a16;
+  --lab-tg-border: rgba(200, 210, 200, 0.16);
+  --lab-tg-title: #eef2ec;
+  --lab-tg-text: #a9b5a9;
+  --lab-tg-icon-bg: #8fd3a8;
+  --lab-tg-icon-fg: #0f1210;
+  --lab-tg-btn-bg: #8fd3a8;
+  --lab-tg-btn-hover: #b9e8c9;
+  --lab-tg-btn-fg: #0f1210;
+  --lab-tg-btn-border: #8fd3a8;
+  --lab-tg-focus: #8fd3a8;
+  --lab-sw-border: rgba(200, 210, 200, 0.2);
+  --lab-sw-bg: #171b18;
+  --lab-sw-fg: #a9b5a9;
+  --lab-sw-hover: #eef2ec;
+  --lab-sw-on-bg: #8fd3a8;
+  --lab-sw-on-fg: #0f1210;
+  --lab-bar-bg: #121614;
+  --lab-bar-fg: #eef2ec;
+  --lab-bar-muted: #a9b5a9;
+  --lab-bar-border: #2c332d;
+  --lab-foot-bg: #101410;
+  --lab-foot-fg: #a9b5a9;
+  --lab-foot-link: #eef2ec;
+  --lab-foot-border: #2c332d;
 }
 :root[data-theme="cyberpunk"] {
   --lab-tg-bg: #a5edf0;
@@ -56,14 +73,116 @@
   --lab-sw-hover: #121024;
   --lab-sw-on-bg: #121024;
   --lab-sw-on-fg: #fff248;
+  --lab-bar-bg: #fff248;
+  --lab-bar-fg: #121024;
+  --lab-bar-muted: #56445c;
+  --lab-bar-border: #a79632;
+  --lab-foot-bg: #f3e43a;
+  --lab-foot-fg: #56445c;
+  --lab-foot-link: #121024;
+  --lab-foot-border: #a79632;
 }
 
-.lab-tg {
+/* Место под фиксированную шапку. */
+body {
+  padding-top: var(--lab-bar-h) !important;
+}
+html {
+  scroll-padding-top: var(--lab-bar-h);
+}
+
+.lab-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-sizing: border-box;
+  height: var(--lab-bar-h);
+  padding: 0 20px;
+  border-bottom: 1px solid var(--lab-bar-border);
+  background: var(--lab-bar-bg);
+  color: var(--lab-bar-fg);
+  font-family: "SF Pro Display", "Inter", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", sans-serif;
+}
+.lab-bar *, .lab-bar *::before, .lab-bar *::after { box-sizing: border-box; }
+.lab-bar__brand,
+.lab-bar__brand:visited {
+  color: var(--lab-bar-fg);
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.lab-bar__brand:hover { opacity: 0.72; }
+.lab-bar__brand:focus-visible,
+.lab-foot a:focus-visible,
+.lab-tg__btn:focus-visible,
+.lab-theme-switch button:focus-visible {
+  outline: 3px solid var(--lab-tg-focus);
+  outline-offset: 2px;
+}
+.lab-bar__brand[aria-current="page"] { cursor: default; }
+.lab-bar__brand[aria-current="page"]:hover { opacity: 1; }
+
+.lab-foot {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 22px 20px 28px;
+  border-top: 1px solid var(--lab-foot-border);
+  background: var(--lab-foot-bg);
+  color: var(--lab-foot-fg);
+  font-family: "SF Pro Display", "Inter", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.lab-foot *, .lab-foot *::before, .lab-foot *::after { box-sizing: border-box; }
+.lab-foot__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 28px;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+.lab-foot a,
+.lab-foot a:visited {
+  color: var(--lab-foot-link);
+  text-decoration: none;
+  text-underline-offset: 0.2em;
+}
+.lab-foot a:hover { text-decoration: underline; }
+
+.lab-subscribe {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 640px;
+  margin: 0 0 8px;
+  padding: 0;
+}
+.lab-subscribe--bar {
+  box-sizing: border-box;
+  max-width: none;
+  margin: 0;
+  padding: 14px 20px 4px;
+  background: var(--lab-bar-bg);
+}
+
+.lab-tg,
+.lab-reload {
   display: flex;
   align-items: center;
   gap: 12px;
   width: 100%;
-  max-width: 560px;
+  max-width: 640px;
   margin: 0;
   padding: 10px 10px 10px 12px;
   border: 1px solid var(--lab-tg-border);
@@ -77,8 +196,10 @@
   text-align: left;
   box-sizing: border-box;
 }
-.lab-tg *, .lab-tg *::before, .lab-tg *::after { box-sizing: border-box; }
-.lab-tg__icon {
+.lab-tg *, .lab-tg *::before, .lab-tg *::after,
+.lab-reload *, .lab-reload *::before, .lab-reload *::after { box-sizing: border-box; }
+.lab-tg__icon,
+.lab-reload__icon {
   display: grid;
   place-items: center;
   flex: none;
@@ -88,12 +209,18 @@
   background: var(--lab-tg-icon-bg);
   color: var(--lab-tg-icon-fg);
 }
-.lab-tg__icon svg { display: block; width: 18px; height: 18px; margin-left: -2px; }
-.lab-tg__text { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1 1 auto; margin: 0; }
-.lab-tg__title { margin: 0; color: var(--lab-tg-title); font-weight: 650; font-size: 15px; line-height: 1.25; }
-.lab-tg__sub { margin: 0; color: var(--lab-tg-text); font-size: 13px; line-height: 1.3; }
+.lab-tg__icon svg,
+.lab-reload__icon svg { display: block; width: 18px; height: 18px; }
+.lab-tg__text,
+.lab-reload__text { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1 1 auto; margin: 0; }
+.lab-tg__title,
+.lab-reload__title { margin: 0; color: var(--lab-tg-title); font-weight: 650; font-size: 15px; line-height: 1.25; }
+.lab-tg__sub,
+.lab-reload__sub { margin: 0; color: var(--lab-tg-text); font-size: 13px; line-height: 1.3; }
 .lab-tg__btn,
-.lab-tg__btn:visited {
+.lab-tg__btn:visited,
+.lab-reload__btn,
+.lab-reload__btn:visited {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -109,23 +236,27 @@
   font-size: 15px;
   line-height: 1.2;
   text-decoration: none;
-  white-space: nowrap;
-  transition: background 0.16s ease-out, transform 0.16s ease-out;
+  text-align: center;
+  white-space: normal;
+  max-width: 260px;
+  transition: background 0.16s ease-out;
 }
-.lab-tg__btn:hover { background: var(--lab-tg-btn-hover); color: var(--lab-tg-btn-fg); text-decoration: none; }
-.lab-tg__btn:active { transform: translateY(1px); }
-.lab-tg__btn:focus-visible { outline: 3px solid var(--lab-tg-focus); outline-offset: 3px; }
-@media (max-width: 420px) {
-  .lab-tg { gap: 10px; padding: 9px 9px 9px 10px; }
-  .lab-tg__icon { width: 30px; height: 30px; }
-  .lab-tg__icon svg { width: 16px; height: 16px; }
-  .lab-tg__title { font-size: 14px; }
-  .lab-tg__sub { display: none; }
-  .lab-tg__btn { min-height: 38px; padding: 7px 12px; font-size: 14px; }
+.lab-tg__btn:hover,
+.lab-reload__btn:hover { background: var(--lab-tg-btn-hover); color: var(--lab-tg-btn-fg); text-decoration: none; }
+.lab-tg__btn:active,
+.lab-reload__btn:active { transform: translateY(1px); }
+@media (max-width: 600px) {
+  .lab-tg, .lab-reload { flex-wrap: wrap; }
+  .lab-tg__text, .lab-reload__text { flex: 1 1 calc(100% - 50px); }
+  .lab-tg__btn, .lab-reload__btn { flex: 1 1 100%; max-width: none; min-height: 42px; }
+  .lab-bar { padding: 0 14px; }
+  .lab-subscribe--bar { padding: 12px 14px 4px; }
+  .lab-foot { padding: 18px 14px 24px; }
 }
-@media (prefers-reduced-motion: reduce) { .lab-tg__btn { transition: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .lab-tg__btn, .lab-reload__btn { transition: none; }
+}
 
-/* Переключатель трёх тем для страниц, где своего не было. */
 .lab-theme-switch {
   display: inline-flex;
   flex: none;
@@ -143,7 +274,7 @@
   justify-content: center;
   gap: 6px;
   min-width: 38px;
-  min-height: 38px;
+  min-height: 34px;
   margin: 0;
   padding: 0 10px;
   border: 0;
@@ -157,9 +288,25 @@
 }
 .lab-theme-switch button:hover { color: var(--lab-sw-hover); }
 .lab-theme-switch button[aria-pressed="true"] { background: var(--lab-sw-on-bg); color: var(--lab-sw-on-fg); }
-.lab-theme-switch button:focus-visible { outline: 3px solid var(--lab-tg-focus); outline-offset: 2px; }
 .lab-theme-switch svg { display: block; width: 16px; height: 16px; flex: none; }
 @media (max-width: 760px) {
   .lab-theme-switch .lab-theme-switch__label { display: none; }
-  .lab-theme-switch button { padding: 0; }
+  .lab-theme-switch button { padding: 0; min-width: 34px; }
+}
+
+/* Старые одиночные переключатели, которые заменила шапка. */
+.lab-top { display: none !important; }
+
+/* Дубли подписки и переключателя, которые страницы всё ещё рисуют сами. */
+body[data-lab-chrome-ready] .lab-tg.page-tg,
+body[data-lab-chrome-ready] .lab-tg.mast-tg,
+body[data-lab-chrome-ready] .lab-tg.title-tg,
+body[data-lab-chrome-ready] .lab-reload.page-reload {
+  display: none !important;
+}
+body[data-lab-chrome-ready] .lab-theme-switch {
+  display: none !important;
+}
+body[data-lab-chrome-ready] .lab-bar .lab-theme-switch {
+  display: inline-flex !important;
 }
