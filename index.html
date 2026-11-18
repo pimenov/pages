@@ -116,7 +116,7 @@
       .card {
         display: flex;
         flex-direction: column;
-        min-height: 100%;
+        height: 100%;
         overflow: hidden;
         border: 1px solid var(--card-border);
         border-radius: 10px;
@@ -134,12 +134,48 @@
         outline: 2px solid var(--accent);
         outline-offset: 3px;
       }
-      .card-cover {
+      .card-media {
+        position: relative;
+        flex: 0 0 auto;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        background: var(--page-rule);
+      }
+      .card-media img {
+        position: absolute;
+        inset: 0;
         display: block;
         width: 100%;
-        aspect-ratio: 16 / 9;
+        height: 100%;
         object-fit: cover;
+        object-position: center center;
+      }
+      .card-media--plain {
+        background:
+          linear-gradient(180deg,
+            color-mix(in srgb, var(--page-paper) 70%, var(--card-hover)) 0%,
+            var(--card-hover) 100%);
+      }
+      .card-media--plain::before,
+      .card-media--plain::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        pointer-events: none;
+      }
+      .card-media--plain::before {
+        width: 56px;
+        height: 1px;
         background: var(--page-rule);
+        transform: translate(-50%, -50%);
+      }
+      .card-media--plain::after {
+        width: 7px;
+        height: 7px;
+        border: 1px solid var(--accent);
+        background: transparent;
+        transform: translate(-50%, -50%);
       }
       .card-body {
         display: flex;
@@ -205,6 +241,7 @@
         <ul class="cards">
           <li>
             <a class="card" href="/webinar-2026-11-08/">
+              <div class="card-media card-media--plain" aria-hidden="true"></div>
               <div class="card-body">
                 <h3 class="card-title">Итоги вебинара «Перезагрузка» 8 ноября</h3>
                 <p class="card-desc">Как сократить расход лимитов Grok Bot и как собрали вертикальные рилсы с Пикселем.</p>
@@ -214,6 +251,7 @@
           </li>
           <li>
             <a class="card" href="/webinar-2026-11-01/">
+              <div class="card-media card-media--plain" aria-hidden="true"></div>
               <div class="card-body">
                 <h3 class="card-title">Итоги вебинара «Перезагрузка» 1 ноября</h3>
                 <p class="card-desc">Команда Grok-ботов в прямом эфире: Степан собрал живой сайт из поста, Research Desk ответил на вопрос зрительницы обзором на 40 источников.</p>
@@ -229,7 +267,9 @@
         <ul class="cards">
           <li>
             <a class="card" href="/music-history/">
-              <img class="card-cover" src="/music-history/og.jpg" alt="" width="1200" height="630">
+              <div class="card-media">
+                <img src="/music-history/og.jpg" alt="" width="1200" height="630">
+              </div>
               <div class="card-body">
                 <h3 class="card-title">От Эдисона до Suno</h3>
                 <p class="card-desc">Две линии за 170 лет: как создавали музыку и как её записывали. От фоноавтографа 1857 года до Suno v6 2026 года.</p>
@@ -239,6 +279,7 @@
           </li>
           <li>
             <a class="card" href="/ubit-drakona/">
+              <div class="card-media card-media--plain" aria-hidden="true"></div>
               <div class="card-body">
                 <h3 class="card-title">Убить дракона</h3>
                 <p class="card-desc">Пьеса Шварца «Дракон» и фильм Захарова «Убить дракона»: хронология запретов, съёмки, цитаты и текст для поста.</p>
@@ -248,6 +289,7 @@
           </li>
           <li>
             <a class="card" href="/longevity-40/">
+              <div class="card-media card-media--plain" aria-hidden="true"></div>
               <div class="card-body">
                 <h3 class="card-title">Долголетие с 40+</h3>
                 <p class="card-desc">Что реально продлевает здоровую жизнь — обзор исследований.</p>
@@ -257,7 +299,9 @@
           </li>
           <li>
             <a class="card" href="/internet-disappears/">
-              <img class="card-cover" src="/internet-disappears/share/og.jpg" alt="" width="1200" height="630">
+              <div class="card-media">
+                <img src="/internet-disappears/share/og.jpg" alt="" width="1200" height="630">
+              </div>
               <div class="card-body">
                 <h3 class="card-title">Интернет исчезает</h3>
                 <p class="card-desc">Из 100 страниц 2013 года к 2023-му исчезли 38. История Internet Archive и Wayback Machine.</p>
@@ -267,7 +311,9 @@
           </li>
           <li>
             <a class="card" href="/soviet-ai/">
-              <img class="card-cover" src="/soviet-ai/share/og.jpg" alt="" width="1200" height="630">
+              <div class="card-media">
+                <img src="/soviet-ai/share/og.jpg" alt="" width="1200" height="630">
+              </div>
               <div class="card-body">
                 <h3 class="card-title">Советские прогнозы об ИИ</h3>
                 <p class="card-desc">18 книг 1958–1991 годов: что советские учёные и фантасты обещали про компьютеры, ИИ и роботов, и что из этого вышло к 2026 году.</p>
@@ -283,6 +329,7 @@
         <ul class="cards">
           <li>
             <a class="card" href="/perezagruzka-boty/">
+              <div class="card-media card-media--plain" aria-hidden="true"></div>
               <div class="card-body">
                 <h3 class="card-title">Как собрать команду Grok-ботов</h3>
                 <p class="card-desc">Как устроена команда Grok-ботов, как собрать похожую у себя, шаблон описания бота и десять готовых описаний.</p>
@@ -292,6 +339,7 @@
           </li>
           <li>
             <a class="card" href="/bot-pipeline/">
+              <div class="card-media card-media--plain" aria-hidden="true"></div>
               <div class="card-body">
                 <h3 class="card-title">Команда Grok-ботов + Codex</h3>
                 <p class="card-desc">Интерактивная схема: как одна тема проходит путь от X до pimenov.ai.</p>
@@ -301,6 +349,7 @@
           </li>
           <li>
             <a class="card" href="/live-office/">
+              <div class="card-media card-media--plain" aria-hidden="true"></div>
               <div class="card-body">
                 <h3 class="card-title">Живой офис Grok-ботов</h3>
                 <p class="card-desc">Команда в изометрическом офисе: кто чем занят, кто ждёт решения, кто свободен. Демо-данные.</p>
@@ -310,6 +359,7 @@
           </li>
           <li>
             <a class="card" href="/team-map/">
+              <div class="card-media card-media--plain" aria-hidden="true"></div>
               <div class="card-body">
                 <h3 class="card-title">Команда Grok-ботов</h3>
                 <p class="card-desc">Карта команды: Сергей в центре, Саркис раздаёт задачи, специалисты доводят результат до pimenov.ai, Telegram и YouTube.</p>
@@ -325,6 +375,7 @@
         <ul class="cards">
           <li>
             <a class="card" href="/reels-frame-lab/">
+              <div class="card-media card-media--plain" aria-hidden="true"></div>
               <div class="card-body">
                 <h3 class="card-title">Лаборатория кадра для Reels</h3>
                 <p class="card-desc">Кадр 9:16 с интерфейсом Reels: раскладки текста, безопасные зоны и подсветка конфликтов с ведущей.</p>
@@ -334,6 +385,7 @@
           </li>
           <li>
             <a class="card" href="/service-as-software/">
+              <div class="card-media card-media--plain" aria-hidden="true"></div>
               <div class="card-body">
                 <h3 class="card-title">Услуга становится программой</h3>
                 <p class="card-desc">Как услуга становится программой: задача, агенты, проверка человека и готовый результат.</p>
@@ -343,6 +395,7 @@
           </li>
           <li>
             <a class="card" href="/host-casting/">
+              <div class="card-media card-media--plain" aria-hidden="true"></div>
               <div class="card-body">
                 <h3 class="card-title">Кастинг ведущих</h3>
                 <p class="card-desc">Рабочий кастинг трёх ведущих pimenov.ai: персонажи, пробы голосов и состав по рубрикам.</p>
@@ -352,6 +405,7 @@
           </li>
           <li>
             <a class="card" href="/stepan-youtube-spam/">
+              <div class="card-media card-media--plain" aria-hidden="true"></div>
               <div class="card-body">
                 <h3 class="card-title">YouTube даёт каналам 30 дней</h3>
                 <p class="card-desc">Разбор Сергея Пименова: новый порядок для каналов, которым грозит удаление за спам.</p>
@@ -361,6 +415,7 @@
           </li>
           <li>
             <a class="card" href="/camera-moves/">
+              <div class="card-media card-media--plain" aria-hidden="true"></div>
               <div class="card-body">
                 <h3 class="card-title">Операторские приёмы</h3>
                 <p class="card-desc">24 операторских приёма с анимацией: схема движения камеры, как выглядит кадр и английский термин для видеопромпта.</p>
@@ -370,6 +425,7 @@
           </li>
           <li>
             <a class="card" href="/pay-per-result/">
+              <div class="card-media card-media--plain" aria-hidden="true"></div>
               <div class="card-body">
                 <h3 class="card-title">Платить за токены или за результат?</h3>
                 <p class="card-desc">Калькулятор: сравните оплату за токены и оплату за результат. Примерные цифры, подставьте свои.</p>
@@ -379,6 +435,7 @@
           </li>
           <li>
             <a class="card" href="/style-lab/">
+              <div class="card-media card-media--plain" aria-hidden="true"></div>
               <div class="card-body">
                 <h3 class="card-title">Лаборатория стилей</h3>
                 <p class="card-desc">18 стилей рилсов HyperFrames · у каждого 9:16 и 16:9.</p>
