@@ -4,12 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Лаборатория Сергея Пименова</title>
+    <meta name="description" content="Страницы, которые рождаются по итогам вебинаров, исследований и экспериментов команды Grok-ботов Сергея Пименова.">
+    <link rel="canonical" href="https://lab.pimenov.ai/">
     <script>
       (function () {
+        var ok = { light: 1, dark: 1, cyberpunk: 1 };
         var theme = "light";
         try {
           var saved = localStorage.getItem("lab-theme");
-          if (saved === "light" || saved === "dark" || saved === "cyberpunk") theme = saved;
+          if (ok[saved]) theme = saved;
         } catch (e) {}
         document.documentElement.setAttribute("data-theme", theme);
         document.documentElement.style.colorScheme = theme === "dark" ? "dark" : "light";
@@ -20,137 +23,371 @@
     <style>
       * { box-sizing: border-box; }
       :root {
-        --page-paper: #f8f9f6;
-        --page-ink: #202820;
-        --page-muted: #525e52;
-        --page-link: #24613e;
-        --page-link-hover: #153c25;
-        --card-bg: #ffffff;
-        --card-border: #d9ded6;
-        --card-hover: #f1f5ef;
+        --page-paper: #f6f4ee;
+        --page-ink: #1c221c;
+        --page-muted: #5a6458;
+        --page-rule: #d8d4c8;
+        --card-bg: #fffcf6;
+        --card-border: #d8d4c8;
+        --card-hover: #f3f0e7;
+        --accent: #24613e;
       }
       :root[data-theme="dark"] {
-        --page-paper: #0f1210;
+        --page-paper: #101410;
         --page-ink: #eef2ec;
-        --page-muted: #a9b5a9;
-        --page-link: #8fd3a8;
-        --page-link-hover: #b9e8c9;
-        --card-bg: #171b18;
+        --page-muted: #a3ae9f;
+        --page-rule: #2a312a;
+        --card-bg: #171c17;
         --card-border: #2c332d;
-        --card-hover: #1e2420;
+        --card-hover: #1e251e;
+        --accent: #8fd3a8;
       }
-      /* Киберпанк: палитра :root[data-theme=cyberpunk] с pimenov.ai */
       :root[data-theme="cyberpunk"] {
         --page-paper: #fff248;
         --page-ink: #121024;
         --page-muted: #56445c;
-        --page-link: #941342;
-        --page-link-hover: #701034;
+        --page-rule: #a79632;
         --card-bg: #fff7a0;
         --card-border: #a79632;
         --card-hover: #fffbd0;
+        --accent: #941342;
       }
       body {
         margin: 0;
         min-height: 100vh;
-        display: grid;
-        place-items: center;
         background: var(--page-paper);
         color: var(--page-ink);
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        line-height: 1.6;
+        font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", sans-serif;
+        line-height: 1.55;
       }
       main {
         width: 100%;
-        max-width: 760px;
-        padding: 64px 24px;
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 48px 24px 80px;
       }
-      h1 {
-        margin: 0 0 24px;
-        font-size: clamp(2rem, 6vw, 3.5rem);
-        font-weight: 650;
-        line-height: 1.15;
-        letter-spacing: -0.035em;
+      .hero {
+        max-width: 40rem;
+        margin: 0 0 36px;
+      }
+      .hero h1 {
+        margin: 0 0 20px;
+        font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", Times, serif;
+        font-size: clamp(2.35rem, 6vw, 3.75rem);
+        font-weight: 600;
+        line-height: 1.08;
+        letter-spacing: -0.03em;
         text-wrap: balance;
       }
-      p {
-        margin: 0 0 32px;
+      .hero p {
+        margin: 0 0 14px;
+        color: var(--page-ink);
+        font-size: 1.15rem;
+        line-height: 1.55;
+      }
+      .hero p:last-child { margin-bottom: 0; }
+      .hero a { color: var(--accent); text-underline-offset: 0.18em; }
+      .hero a:hover { color: var(--page-ink); }
+      .home-sub {
+        margin: 28px 0 56px;
+        max-width: 640px;
+      }
+      .rubric {
+        margin: 0 0 48px;
+      }
+      .rubric h2 {
+        margin: 0 0 16px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--page-rule);
+        font-size: 0.8rem;
+        font-weight: 650;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
         color: var(--page-muted);
-        font-size: 1.125rem;
       }
-      a {
-        color: var(--page-link);
-        text-underline-offset: 0.25em;
-      }
-      a:hover { color: var(--page-link-hover); }
-      .lab-top {
-        position: fixed;
-        top: 16px;
-        right: 16px;
-        z-index: 5;
-      }
-      .home-tg { margin: 0 0 32px; }
-      .projects {
+      .cards {
         display: grid;
-        gap: 12px;
-        margin: 0 0 32px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin: 0;
         padding: 0;
         list-style: none;
       }
-      .project {
+      .card {
         display: flex;
-        align-items: center;
-        gap: 16px;
-        padding: 16px 18px;
+        flex-direction: column;
+        min-height: 100%;
+        overflow: hidden;
         border: 1px solid var(--card-border);
-        border-radius: 8px;
+        border-radius: 10px;
         background: var(--card-bg);
-        color: var(--page-ink);
+        color: inherit;
         text-decoration: none;
-        transition: border-color 0.16s ease-out, background 0.16s ease-out;
+        transition: border-color 0.16s ease-out, background 0.16s ease-out, transform 0.16s ease-out;
       }
-      .project:hover { border-color: var(--page-link); background: var(--card-hover); color: var(--page-ink); }
-      .project:focus-visible { outline: 2px solid var(--page-link); outline-offset: 3px; }
-      .project-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
-      .project-title { font-size: 1.125rem; font-weight: 650; line-height: 1.3; }
-      .project-desc { color: var(--page-muted); font-size: 0.95rem; line-height: 1.4; }
-      .project-arrow { flex: none; width: 20px; height: 20px; color: var(--page-link); }
-      @media (prefers-reduced-motion: reduce) { .project { transition: none; } }
-      a:focus-visible {
-        outline: 2px solid currentColor;
-        outline-offset: 5px;
+      .card:hover {
+        border-color: var(--accent);
+        background: var(--card-hover);
+        color: inherit;
+      }
+      .card:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+      .card-cover {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        background: var(--page-rule);
+      }
+      .card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex: 1;
+        padding: 16px 18px 18px;
+      }
+      .card-title {
+        margin: 0;
+        font-size: 1.15rem;
+        font-weight: 650;
+        line-height: 1.28;
+        letter-spacing: -0.02em;
+        text-wrap: balance;
+      }
+      .card-desc {
+        margin: 0;
+        color: var(--page-muted);
+        font-size: 0.95rem;
+        line-height: 1.45;
+      }
+      .card-date {
+        margin-top: auto;
+        padding-top: 6px;
+        color: var(--page-muted);
+        font-size: 0.8rem;
+        letter-spacing: 0.02em;
+      }
+      @media (max-width: 720px) {
+        main { padding: 32px 16px 64px; }
+        .cards { grid-template-columns: 1fr; }
+        .hero p { font-size: 1.05rem; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .card { transition: none; }
       }
     </style>
-  <style id="lab-reload-css">
-.lab-reload{display:flex;align-items:center;gap:12px;width:100%;max-width:640px;margin:0 0 10px;padding:10px 10px 10px 12px;border:1px solid var(--lab-tg-border,#d6ddeb);border-radius:8px;background:var(--lab-tg-bg,#f4f7fc);color:var(--lab-tg-title,#08090c);font-family:"SF Pro Display","Inter",-apple-system,BlinkMacSystemFont,system-ui,"Segoe UI",sans-serif;font-size:15px;line-height:1.3;letter-spacing:normal;text-align:left;box-sizing:border-box;position:relative;z-index:5}
-.lab-reload *,.lab-reload *::before,.lab-reload *::after{box-sizing:border-box}
-.lab-reload__icon{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:50%;background:var(--lab-tg-icon-bg,#3d69e7);color:var(--lab-tg-icon-fg,#fff)}
-.lab-reload__icon svg{display:block;width:18px;height:18px}
-.lab-reload__text{display:flex;flex-direction:column;gap:1px;min-width:180px;flex:1 1 auto;margin:0}
-.lab-reload__title{margin:0;color:var(--lab-tg-title,#08090c);font-weight:650;font-size:15px;line-height:1.25}
-.lab-reload__sub{margin:0;color:var(--lab-tg-text,#5b6580);font-size:13px;line-height:1.3}
-.lab-reload__btn,.lab-reload__btn:visited{display:inline-flex;align-items:center;justify-content:center;flex:none;min-height:40px;padding:8px 16px;border:1px solid var(--lab-tg-btn-border,#3d69e7);border-radius:4px;background:var(--lab-tg-btn-bg,#3d69e7);color:var(--lab-tg-btn-fg,#fff);font:inherit;font-weight:600;font-size:15px;line-height:1.2;text-decoration:none;text-align:center;white-space:normal;max-width:260px;transition:background .16s ease-out}
-.lab-reload__btn:hover{background:var(--lab-tg-btn-hover,#2f58cf);color:var(--lab-tg-btn-fg,#fff);text-decoration:none}
-.lab-reload__btn:focus-visible{outline:3px solid var(--lab-tg-focus,#3d69e7);outline-offset:3px}
-@media(max-width:600px){.lab-reload{flex-wrap:wrap}.lab-reload__text{flex:1 1 calc(100% - 50px)}.lab-reload__btn{flex:1 1 100%;max-width:none;min-height:42px}}
-</style>
-</head>
+  </head>
   <body>
-    <div class="lab-top" data-lab-theme-switch></div>
     <main>
-      <h1>Лаборатория Сергея Пименова</h1>
-      <p>Открытые проекты и прототипы Grok&#8209;ботов.</p>
-      <aside class="lab-reload" aria-label="Подписка «Перезагрузка»"><span class="lab-reload__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v4.5h-4.5"/></svg></span><span class="lab-reload__text"><span class="lab-reload__title">Подписка «Перезагрузка»</span><span class="lab-reload__sub">Вебинары каждое воскресенье и команда Grok-ботов изнутри</span></span><a class="lab-reload__btn" href="https://t.me/reload_pimenov_ai_bot" target="_blank" rel="noopener">Подписаться на «Перезагрузку» за&nbsp;1900&nbsp;₽ в&nbsp;месяц</a></aside>
-<aside class="lab-tg home-tg" aria-label="Telegram-канал НИИ ИИ">
-        <span class="lab-tg__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.7 3.3 2.6 10.3c-1.2.5-1.2 1.2-.2 1.5l4.6 1.4 1.8 5.4c.2.6.1.8.7.8.5 0 .7-.2 1-.5l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.8-1.3-1.5zM8.9 13l8.8-5.6c.4-.3.8-.1.5.2l-7.6 6.8-.3 3.3L8.9 13z"/></svg></span>
-        <span class="lab-tg__text"><span class="lab-tg__title">Telegram-канал «НИИ&nbsp;ИИ»</span><span class="lab-tg__sub">Сергей Пименов о практическом ИИ</span></span>
-        <a class="lab-tg__btn" href="https://t.me/ai_rostov" target="_blank" rel="noopener">Подписаться</a>
-      </aside>
-      <ul class="projects" aria-label="Проекты">
-        <li><a class="project" href="/soviet-ai/"><span class="project-text"><span class="project-title">Советские прогнозы об ИИ</span><span class="project-desc">18 книг 1958–1991 годов: что сбылось к 2026 году</span></span><svg class="project-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4.5-4.5L15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
-        <li><a class="project" href="/internet-disappears/"><span class="project-text"><span class="project-title">Интернет исчезает</span><span class="project-desc">Из 100 страниц 2013 года к 2023-му исчезли 38</span></span><svg class="project-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4.5-4.5L15 10l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a></li>
-      </ul>
-      <a href="https://pimenov.ai">pimenov.ai</a>
+      <header class="hero">
+        <h1>Лаборатория Сергея Пименова</h1>
+        <p>Это лаборатория. Здесь собраны страницы, которые появляются после вебинаров, исследований и экспериментов моей команды Grok-ботов.</p>
+        <p>Разборы, прототипы, живые сайты из эфира — оставляю их здесь, как получилось. Можно ходить между ними и смотреть, как устроена работа.</p>
+      </header>
+
+      <div class="lab-subscribe home-sub" data-lab-keep>
+        <aside class="lab-reload" aria-label="Подписка «Перезагрузка»">
+          <span class="lab-reload__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v4.5h-4.5"/></svg></span>
+          <span class="lab-reload__text"><span class="lab-reload__title">Подписка «Перезагрузка»</span><span class="lab-reload__sub">Вебинары каждое воскресенье и команда Grok-ботов изнутри</span></span>
+          <a class="lab-reload__btn" href="https://t.me/reload_pimenov_ai_bot?start=site" target="_blank" rel="noopener">Подписаться на «Перезагрузку» за&nbsp;1&nbsp;900&nbsp;₽ в&nbsp;месяц</a>
+        </aside>
+        <aside class="lab-tg" aria-label="Telegram-канал НИИ ИИ">
+          <span class="lab-tg__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.7 3.3 2.6 10.3c-1.2.5-1.2 1.2-.2 1.5l4.6 1.4 1.8 5.4c.2.6.1.8.7.8.5 0 .7-.2 1-.5l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.8-1.3-1.5zM8.9 13l8.8-5.6c.4-.3.8-.1.5.2l-7.6 6.8-.3 3.3L8.9 13z"/></svg></span>
+          <span class="lab-tg__text"><span class="lab-tg__title">Telegram-канал «НИИ&nbsp;ИИ»</span><span class="lab-tg__sub">Сергей Пименов о практическом ИИ</span></span>
+          <a class="lab-tg__btn" href="https://t.me/ai_rostov" target="_blank" rel="noopener">Подписаться</a>
+        </aside>
+      </div>
+
+      <section class="rubric" aria-labelledby="r-webinars">
+        <h2 id="r-webinars">Вебинары</h2>
+        <ul class="cards">
+          <li>
+            <a class="card" href="/webinar-2026-11-08/">
+              <div class="card-body">
+                <h3 class="card-title">Итоги вебинара «Перезагрузка» 8 ноября</h3>
+                <p class="card-desc">Как сократить расход лимитов Grok Bot и как собрали вертикальные рилсы с Пикселем.</p>
+                <p class="card-date">8 ноября 2026</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="card" href="/webinar-2026-11-01/">
+              <div class="card-body">
+                <h3 class="card-title">Итоги вебинара «Перезагрузка» 1 ноября</h3>
+                <p class="card-desc">Команда Grok-ботов в прямом эфире: Степан собрал живой сайт из поста, Research Desk ответил на вопрос зрительницы обзором на 40 источников.</p>
+                <p class="card-date">1 ноября 2026</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="rubric" aria-labelledby="r-research">
+        <h2 id="r-research">Исследования</h2>
+        <ul class="cards">
+          <li>
+            <a class="card" href="/music-history/">
+              <img class="card-cover" src="/music-history/og.jpg" alt="" width="1200" height="630">
+              <div class="card-body">
+                <h3 class="card-title">От Эдисона до Suno</h3>
+                <p class="card-desc">Две линии за 170 лет: как создавали музыку и как её записывали. От фоноавтографа 1857 года до Suno v6 2026 года.</p>
+                <p class="card-date">18 ноября 2026</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="card" href="/ubit-drakona/">
+              <div class="card-body">
+                <h3 class="card-title">Убить дракона</h3>
+                <p class="card-desc">Пьеса Шварца «Дракон» и фильм Захарова «Убить дракона»: хронология запретов, съёмки, цитаты и текст для поста.</p>
+                <p class="card-date">16 ноября 2026</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="card" href="/longevity-40/">
+              <div class="card-body">
+                <h3 class="card-title">Долголетие с 40+</h3>
+                <p class="card-desc">Что реально продлевает здоровую жизнь — обзор исследований.</p>
+                <p class="card-date">1 ноября 2026</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="card" href="/internet-disappears/">
+              <img class="card-cover" src="/internet-disappears/share/og.jpg" alt="" width="1200" height="630">
+              <div class="card-body">
+                <h3 class="card-title">Интернет исчезает</h3>
+                <p class="card-desc">Из 100 страниц 2013 года к 2023-му исчезли 38. История Internet Archive и Wayback Machine.</p>
+                <p class="card-date">30 октября 2026</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="card" href="/soviet-ai/">
+              <img class="card-cover" src="/soviet-ai/share/og.jpg" alt="" width="1200" height="630">
+              <div class="card-body">
+                <h3 class="card-title">Советские прогнозы об ИИ</h3>
+                <p class="card-desc">18 книг 1958–1991 годов: что советские учёные и фантасты обещали про компьютеры, ИИ и роботов, и что из этого вышло к 2026 году.</p>
+                <p class="card-date">27 октября 2026</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="rubric" aria-labelledby="r-team">
+        <h2 id="r-team">Команда ботов</h2>
+        <ul class="cards">
+          <li>
+            <a class="card" href="/perezagruzka-boty/">
+              <div class="card-body">
+                <h3 class="card-title">Как собрать команду Grok-ботов</h3>
+                <p class="card-desc">Как устроена команда Grok-ботов, как собрать похожую у себя, шаблон описания бота и десять готовых описаний.</p>
+                <p class="card-date">2 ноября 2026</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="card" href="/bot-pipeline/">
+              <div class="card-body">
+                <h3 class="card-title">Команда Grok-ботов + Codex</h3>
+                <p class="card-desc">Интерактивная схема: как одна тема проходит путь от X до pimenov.ai.</p>
+                <p class="card-date">30 октября 2026</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="card" href="/live-office/">
+              <div class="card-body">
+                <h3 class="card-title">Живой офис Grok-ботов</h3>
+                <p class="card-desc">Команда в изометрическом офисе: кто чем занят, кто ждёт решения, кто свободен. Демо-данные.</p>
+                <p class="card-date">30 октября 2026</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="card" href="/team-map/">
+              <div class="card-body">
+                <h3 class="card-title">Команда Grok-ботов</h3>
+                <p class="card-desc">Карта команды: Сергей в центре, Саркис раздаёт задачи, специалисты доводят результат до pimenov.ai, Telegram и YouTube.</p>
+                <p class="card-date">28 октября 2026</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="rubric" aria-labelledby="r-lab">
+        <h2 id="r-lab">Эксперименты</h2>
+        <ul class="cards">
+          <li>
+            <a class="card" href="/reels-frame-lab/">
+              <div class="card-body">
+                <h3 class="card-title">Лаборатория кадра для Reels</h3>
+                <p class="card-desc">Кадр 9:16 с интерфейсом Reels: раскладки текста, безопасные зоны и подсветка конфликтов с ведущей.</p>
+                <p class="card-date">16 ноября 2026</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="card" href="/service-as-software/">
+              <div class="card-body">
+                <h3 class="card-title">Услуга становится программой</h3>
+                <p class="card-desc">Как услуга становится программой: задача, агенты, проверка человека и готовый результат.</p>
+                <p class="card-date">9 ноября 2026</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="card" href="/host-casting/">
+              <div class="card-body">
+                <h3 class="card-title">Кастинг ведущих</h3>
+                <p class="card-desc">Рабочий кастинг трёх ведущих pimenov.ai: персонажи, пробы голосов и состав по рубрикам.</p>
+                <p class="card-date">9 ноября 2026</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="card" href="/stepan-youtube-spam/">
+              <div class="card-body">
+                <h3 class="card-title">YouTube даёт каналам 30 дней</h3>
+                <p class="card-desc">Разбор Сергея Пименова: новый порядок для каналов, которым грозит удаление за спам.</p>
+                <p class="card-date">31 октября 2026</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="card" href="/camera-moves/">
+              <div class="card-body">
+                <h3 class="card-title">Операторские приёмы</h3>
+                <p class="card-desc">24 операторских приёма с анимацией: схема движения камеры, как выглядит кадр и английский термин для видеопромпта.</p>
+                <p class="card-date">30 октября 2026</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="card" href="/pay-per-result/">
+              <div class="card-body">
+                <h3 class="card-title">Платить за токены или за результат?</h3>
+                <p class="card-desc">Калькулятор: сравните оплату за токены и оплату за результат. Примерные цифры, подставьте свои.</p>
+                <p class="card-date">28 октября 2026</p>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="card" href="/style-lab/">
+              <div class="card-body">
+                <h3 class="card-title">Лаборатория стилей</h3>
+                <p class="card-desc">18 стилей рилсов HyperFrames · у каждого 9:16 и 16:9.</p>
+                <p class="card-date">27 октября 2026</p>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </section>
     </main>
   </body>
 </html>

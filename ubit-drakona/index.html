@@ -2,6 +2,18 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function () {
+        var ok = { light: 1, dark: 1, cyberpunk: 1 };
+        var theme = "light";
+        try {
+          var saved = localStorage.getItem("lab-theme");
+          if (ok[saved]) theme = saved;
+        } catch (e) {}
+        document.documentElement.setAttribute("data-theme", theme);
+        document.documentElement.style.colorScheme = theme === "dark" ? "dark" : "light";
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
     <meta name="description" content="Пьеса Шварца «Дракон» и фильм Захарова «Убить дракона»: хронология запретов, съёмки, цитаты и текст для поста." />
@@ -12,6 +24,8 @@
     </script>
     <script type="module" crossorigin src="/ubit-drakona/assets/index-C5xZLd3-.js"></script>
     <link rel="stylesheet" crossorigin href="/ubit-drakona/assets/index-DzESkrXh.css">
-  </head>
+    <link rel="stylesheet" href="/lab-chrome/lab-chrome.css">
+    <script src="/lab-chrome/lab-chrome.js" defer></script>
+</head>
   <body><div id="root"></div></body>
 </html>

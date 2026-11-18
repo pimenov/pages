@@ -2,6 +2,18 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function () {
+        var ok = { light: 1, dark: 1, cyberpunk: 1 };
+        var theme = "light";
+        try {
+          var saved = localStorage.getItem("lab-theme");
+          if (ok[saved]) theme = saved;
+        } catch (e) {}
+        document.documentElement.setAttribute("data-theme", theme);
+        document.documentElement.style.colorScheme = theme === "dark" ? "dark" : "light";
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
     <title>От Эдисона до Suno — история технологий музыки и звукозаписи</title>
@@ -28,7 +40,9 @@
     </script>
     <script type="module" crossorigin src="/music-history/assets/index-CprgsHPV.js"></script>
     <link rel="stylesheet" crossorigin href="/music-history/assets/index-_gYdJEYd.css">
-  </head>
+    <link rel="stylesheet" href="/lab-chrome/lab-chrome.css">
+    <script src="/lab-chrome/lab-chrome.js" defer></script>
+</head>
   <body>
     <div class="wrap">
       <header class="top">

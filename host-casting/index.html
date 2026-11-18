@@ -2,6 +2,18 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function () {
+        var ok = { light: 1, dark: 1, cyberpunk: 1 };
+        var theme = "light";
+        try {
+          var saved = localStorage.getItem("lab-theme");
+          if (ok[saved]) theme = saved;
+        } catch (e) {}
+        document.documentElement.setAttribute("data-theme", theme);
+        document.documentElement.style.colorScheme = theme === "dark" ? "dark" : "light";
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f5f4ef" />
     <meta name="robots" content="noindex,nofollow" />
@@ -16,7 +28,9 @@
     <title>Кастинг ведущих — pimenov.ai</title>
     <script type="module" crossorigin src="/host-casting/assets/index-BmBlvVfD.js"></script>
     <link rel="stylesheet" crossorigin href="/host-casting/assets/index-Bdv51a7_.css">
-  </head>
+    <link rel="stylesheet" href="/lab-chrome/lab-chrome.css">
+    <script src="/lab-chrome/lab-chrome.js" defer></script>
+</head>
   <body>
     <div id="root"></div>
   </body>
