@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Полёт над Доном: Ростов-на-Дону в 3D · Лаборатория Сергея Пименова</title>
+    <meta name="description" content="Двадцатисекундный пролёт над Доном мимо семи ростовских ориентиров: от Ворошиловского моста до «Тачанки-ростовчанки». Сцена на Three.js по карте OpenStreetMap, рельефу Copernicus и 18 фотографиям.">
+    <link rel="canonical" href="https://lab.pimenov.ai/rostov-flight/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:url" content="https://lab.pimenov.ai/rostov-flight/">
+    <meta property="og:title" content="Полёт над Доном: Ростов-на-Дону в 3D">
+    <meta property="og:description" content="20 секунд над Доном мимо семи ориентиров Ростова. Видео и живая 3D-сцена в браузере.">
+    <meta property="og:image" content="https://lab.pimenov.ai/rostov-flight/og.jpg">
+    <meta property="og:image:width" content="1600">
+    <meta property="og:image:height" content="900">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:alt" content="Памятник «Тачанка-ростовчанка» в 3D-сцене">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Полёт над Доном: Ростов-на-Дону в 3D">
+    <meta name="twitter:description" content="20 секунд над Доном мимо семи ориентиров Ростова. Видео и живая 3D-сцена в браузере.">
+    <meta name="twitter:image" content="https://lab.pimenov.ai/rostov-flight/og.jpg">
+    <link rel="preload" as="image" href="/rostov-flight/poster.webp" type="image/webp">
+    <script>
+      (function () {
+        var ok = { light: 1, dark: 1, cyberpunk: 1 };
+        var theme = "light";
+        try {
+          var saved = localStorage.getItem("lab-theme");
+          if (ok[saved]) theme = saved;
+        } catch (e) {}
+        document.documentElement.setAttribute("data-theme", theme);
+        document.documentElement.style.colorScheme = theme === "dark" ? "dark" : "light";
+      })();
+    </script>
+    <link rel="stylesheet" href="/lab-chrome/lab-chrome.css">
+    <script src="/lab-chrome/lab-chrome.js" defer></script>
+    <style>
+      * { box-sizing: border-box; }
+      [hidden] { display: none !important; }
+      :root {
+        --page-paper: #f6f4ee; --page-ink: #1c221c; --page-muted: #5a6458; --page-rule: #d8d4c8;
+        --card-bg: #fffcf6; --accent: #24613e; --accent-ink: #fff;
+      }
+      :root[data-theme="dark"] {
+        --page-paper: #101410; --page-ink: #eef2ec; --page-muted: #a3ae9f; --page-rule: #2a312a;
+        --card-bg: #171c17; --accent: #8fd3a8; --accent-ink: #0f1210;
+      }
+      :root[data-theme="cyberpunk"] {
+        --page-paper: #fff248; --page-ink: #121024; --page-muted: #56445c; --page-rule: #a79632;
+        --card-bg: #fff7a0; --accent: #941342; --accent-ink: #fff;
+      }
+      body {
+        margin: 0; background: var(--page-paper); color: var(--page-ink);
+        font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", sans-serif;
+        line-height: 1.55;
+      }
+      main { width: 100%; max-width: 1120px; margin: 0 auto; padding: 36px 24px 72px; }
+      a { color: var(--accent); text-underline-offset: 0.18em; }
+      .kicker { margin: 0 0 10px; color: var(--page-muted); font-size: 0.8rem; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; }
+      h1 {
+        margin: 0 0 14px; font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", Times, serif;
+        font-size: clamp(2.1rem, 5.4vw, 3.4rem); font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; text-wrap: balance;
+      }
+      .lead { max-width: 44rem; margin: 0 0 24px; font-size: 1.15rem; }
+      h2 {
+        margin: 56px 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--page-rule);
+        font-size: 0.8rem; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; color: var(--page-muted);
+      }
+      p { max-width: 44rem; }
+
+      /* Экран со сценой: всегда тёмный, как в исходной сцене */
+      .viewer { border-radius: 12px; overflow: hidden; background: #14211e; color: #f2edde; }
+      .stage { position: relative; aspect-ratio: 16 / 9; background: #354b48; overflow: hidden; }
+      .stage video, .stage canvas, .stage .poster { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
+      .stage canvas { object-fit: fill; }
+      .overlay {
+        position: absolute; inset: 0; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px;
+        padding: clamp(14px, 3vw, 28px); background: linear-gradient(180deg, transparent 50%, rgba(10, 20, 17, 0.55));
+      }
+      .btn {
+        font: inherit; font-size: 1rem; font-weight: 600; cursor: pointer; border-radius: 8px; padding: 0.7em 1.15em;
+        border: 1px solid #dbb77f; background: #dbb77f; color: #17221b; display: inline-flex; align-items: center; gap: 0.5em;
+      }
+      .btn:hover { background: #e8c993; }
+      .btn--ghost { background: rgba(20, 33, 30, 0.72); color: #f2edde; border-color: #9aa79e; }
+      .btn--ghost:hover { background: rgba(20, 33, 30, 0.9); border-color: #e7c78f; }
+      .btn:focus-visible, .viewer button:focus-visible, .viewer input:focus-visible { outline: 2px solid #e5be7e; outline-offset: 3px; }
+      .btn svg { width: 1em; height: 1em; }
+      .btn small { font-weight: 400; opacity: 0.8; }
+      #status { position: absolute; inset: auto 14px 12px; background: #21332d; padding: 7px 12px; font-size: 14px; }
+      .bar { display: flex; align-items: center; gap: 14px; padding: 10px 16px; font-size: 14px; min-height: 52px; flex-wrap: wrap; }
+      .bar button {
+        font: inherit; color: inherit; cursor: pointer; background: transparent; border: 1px solid #66736b; border-radius: 5px; padding: 0.42em 0.9em;
+      }
+      .bar button:hover { border-color: #e7c78f; }
+      #play { background: #dbb77f; color: #17221b; border-color: #dbb77f; min-width: 96px; }
+      #seek { flex: 1; min-width: 80px; accent-color: #d5b57b; cursor: pointer; }
+      #time { min-width: 80px; font-variant-numeric: tabular-nums; text-align: right; }
+      .bar-note { flex: 1; color: #c9d1c7; }
+      #subject { color: #e7e1d1; }
+      .viewer[data-mode="video"] .scene-only, .viewer[data-mode="scene"] .video-only { display: none !important; }
+      .hint { margin: 10px 0 0; color: var(--page-muted); font-size: 0.9rem; }
+
+      .route { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 28px; }
+      .route li { display: grid; grid-template-columns: 6.2rem 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--page-rule); }
+      .route time { color: var(--page-muted); font-variant-numeric: tabular-nums; font-size: 0.92rem; padding-top: 2px; }
+      .route b { display: block; font-weight: 650; }
+      .route span { color: var(--page-muted); font-size: 0.95rem; }
+      .facts { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+      .facts li { background: var(--card-bg); border: 1px solid var(--page-rule); border-radius: 10px; padding: 16px 18px; }
+      .facts b { display: block; margin-bottom: 4px; }
+      .facts p { margin: 0; color: var(--page-muted); font-size: 0.95rem; }
+      .sources p { font-size: 0.92rem; }
+      .sources .en { color: var(--page-muted); }
+      .photos { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin-top: 8px; }
+      .photos th, .photos td { text-align: left; vertical-align: top; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--page-rule); }
+      .photos th { color: var(--page-muted); font-weight: 600; }
+      .photos td:first-child { color: var(--page-muted); font-variant-numeric: tabular-nums; }
+      .table-wrap { overflow-x: auto; }
+      @media (max-width: 720px) {
+        main { padding: 24px 16px 56px; }
+        .route, .facts { grid-template-columns: 1fr; }
+        .lead { font-size: 1.05rem; }
+        .btn { font-size: 0.95rem; }
+        .bar { gap: 8px; padding: 8px 10px; }
+        .photos thead { display: none; }
+        .photos, .photos tbody, .photos tr, .photos td { display: block; }
+        .photos tr { padding: 8px 0; border-bottom: 1px solid var(--page-rule); }
+        .photos td { border: 0; padding: 1px 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="kicker">Эксперимент · 3D</p>
+      <h1>Полёт над Доном</h1>
+      <p class="lead">Двадцать секунд над Ростовом-на-Дону: камера идёт низко над водой, поднимается над Ворошиловским мостом, проходит мимо театра, собора и складов, пересекает реку к «Ростов Арене» и заканчивает у «Тачанки-ростовчанки» и панорамы Дона.</p>
+
+      <section class="viewer" id="viewer" data-mode="video" aria-label="Пролёт над Доном">
+        <div class="stage" id="stage">
+          <video id="film" class="video-only" playsinline preload="none" poster="/rostov-flight/poster.webp" width="1280" height="720" aria-label="Видео: пролёт над Доном, 20 секунд">
+            <source src="/rostov-flight/flight-720.mp4" type="video/mp4" media="(max-width: 900px)">
+            <source src="/rostov-flight/flight-1080.mp4" type="video/mp4">
+          </video>
+          <div class="overlay video-only" id="overlay">
+            <button class="btn" type="button" id="watch"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>Смотреть видео <small>20 с</small></button>
+            <button class="btn btn--ghost" type="button" id="open3d" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5 14 5v6l-6 3.5L2 11V5zM2 5l6 3.5L14 5M8 8.5v6" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>Открыть в 3D <small>≈5 МБ</small></button>
+          </div>
+        </div>
+        <div class="bar video-only">
+          <span class="bar-note" id="note">Видео, 20 секунд. В 3D-режиме можно остановить полёт на любом кадре и включить серый макет.</span>
+        </div>
+        <div class="bar scene-only" id="controls" inert>
+          <button type="button" id="play">Смотреть</button>
+          <input id="seek" aria-label="Время пролёта" type="range" min="0" max="20" step="0.01" value="0">
+          <output id="time">0,0 / 20 с</output>
+          <button type="button" id="mode" aria-pressed="false">Серый макет</button>
+          <span id="subject">Дон и правая набережная</span>
+        </div>
+      </section>
+      <p class="hint" id="hint">3D-сцена работает в браузере с WebGL 2: ползунок двигает камеру по времени, пробел ставит на паузу.</p>
+
+      <h2>Семь ориентиров</h2>
+      <ol class="route">
+        <li><time>0–4 с</time><div><b>Дон и правая набережная</b><span>Низко над водой, вдоль городского берега</span></div></li>
+        <li><time>4–9 с</time><div><b>Ворошиловский мост</b><span>Пролёт через два балочных моста</span></div></li>
+        <li><time>9–11,2 с</time><div><b>Театр драмы имени Максима Горького</b><span>Высокая дуга мимо театра</span></div></li>
+        <li><time>11,2–14 с</time><div><b>Собор Рождества Пресвятой Богородицы</b><span>Собор и отдельно стоящая колокольня</span></div></li>
+        <li><time>14–15,4 с</time><div><b>Парамоновские склады</b><span>Камера идёт вдоль четырёх корпусов</span></div></li>
+        <li><time>15,4–16,8 с</time><div><b>«Ростов Арена»</b><span>Через реку к Арене</span></div></li>
+        <li><time>16,8–18 с</time><div><b>«Тачанка-ростовчанка»</b><span>Склейка на памятник у южного въезда</span></div></li>
+        <li><time>18–20 с</time><div><b>Панорама Дона</b><span>Камера возвращается к общему плану реки</span></div></li>
+      </ol>
+
+      <h2>Как собрано</h2>
+      <ul class="facts">
+        <li><b>Three.js и WebGL 2</b><p>Вся сцена — код на Three.js. Камера, склейки и свет заданы по времени, поэтому любой кадр можно открыть точно: памятник, например, появляется на 17,37 с.</p></li>
+        <li><b>Карта OpenStreetMap</b><p>Контуры кварталов, набережной и зданий взяты из OSM через OpenFreeMap (схема OpenMapTiles). Детали семи мест сверены с OSM 18 ноября 2026 года. Координаты считаются в метрах от Ворошиловского моста.</p></li>
+        <li><b>Рельеф Copernicus</b><p>Высоты взяты из Copernicus DEM GLO-30 и пересчитаны в сглаженную сетку относительно уровня воды.</p></li>
+        <li><b>18 фотографий</b><p>Мост, театр, собор, склады, Арена и памятник смоделированы по формам и пропорциям со снимков. Лошадей и экипаж тачанки вылепили по виду в профиль и виду спереди сбоку.</p></li>
+        <li><b>Фильм</b><p>Видео — 600 кадров, отрендеренных из той же сцены: 20 секунд, 30 кадров в секунду, H.264.</p></li>
+        <li><b>Стиль</b><p>Фоновые здания построены по картографическим высотам и приближённым объёмам. Кроны, отделка и фигуры памятника стилизованы по фотографиям.</p></li>
+      </ul>
+
+      <h2 id="sources">Источники и лицензии</h2>
+      <div class="sources">
+        <p><b>Карта.</b> Данные карты © <a href="https://www.openstreetmap.org/copyright">участники OpenStreetMap</a>, лицензия <a href="https://opendatacommons.org/licenses/odbl/1-0/">Open Database License (ODbL) 1.0</a>. Векторная выборка получена из <a href="https://openfreemap.org/">OpenFreeMap</a> по схеме <a href="https://openmaptiles.org/">OpenMapTiles</a>, выпуск 20261115_080022_pt. Детали семи мест сверены с OSM API 18 ноября 2026 года.</p>
+        <p><b>Рельеф.</b> Высоты получены из Copernicus DEM GLO-30, фрагмент N47 E039, дата обращения 18 ноября 2026 года. <a href="https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM">Описание и лицензия Copernicus DEM</a>.</p>
+        <p class="en" lang="en">Produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved.</p>
+        <p><b>Three.js</b> используется на условиях лицензии <a href="/rostov-flight/THREE-LICENSE.txt">MIT</a>.</p>
+        <p><b>Фотографии.</b> Снимки служили образцами формы и пропорций для моделей, на этой странице они не публикуются. Права указаны для каждого источника отдельно.</p>
+        <div class="table-wrap">
+          <table class="photos">
+            <thead><tr><th>№</th><th>Объект и ракурс</th><th>Автор или источник</th><th>Год</th><th>Лицензия</th></tr></thead>
+            <tbody>
+              <tr><td>01</td><td>Дон и правая набережная. Низко над водой</td><td><a href="https://commons.wikimedia.org/?curid=178902689">Г. А. Липунов (GennadyL)</a></td><td>публикация 2025</td><td><a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en">CC0</a></td></tr>
+              <tr><td>02</td><td>Дон и правая набережная. Панорама с левого берега</td><td><a href="https://commons.wikimedia.org/?curid=105411493">Lobotras</a></td><td>2021</td><td><a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a></td></tr>
+              <tr><td>03</td><td>Ворошиловский мост. Профиль с правого берега</td><td><a href="https://commons.wikimedia.org/?curid=123328440">Nikolai Bulykin</a></td><td>2022</td><td><a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a></td></tr>
+              <tr><td>04</td><td>Ворошиловский мост. Два полотна снизу</td><td><a href="https://commons.wikimedia.org/?curid=157416207">Вячеслав Аргенберг</a></td><td>2022</td><td><a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a></td></tr>
+              <tr><td>05</td><td>Театр драмы имени Максима Горького. Фасад с Театральной площади</td><td><a href="https://commons.wikimedia.org/?curid=36483564">Михаил Микулин</a></td><td>2014</td><td><a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></td></tr>
+              <tr><td>06</td><td>Театр драмы имени Максима Горького. Театр сверху наискосок</td><td><a href="https://loveopium.ru/rossiya/rostov-na-donu.html">Слава Степанов</a></td><td>публикация 2019</td><td>Условия использования у источника</td></tr>
+              <tr><td>07</td><td>Собор Рождества Пресвятой Богородицы и колокольня. Собор и колокольня с площади</td><td><a href="https://commons.wikimedia.org/?curid=105411501">pavljenko</a></td><td>2021</td><td><a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a></td></tr>
+              <tr><td>08</td><td>Собор Рождества Пресвятой Богородицы и колокольня. Ансамбль над кварталами</td><td><a href="https://commons.wikimedia.org/?curid=36316939">Rost.galis</a></td><td>2011</td><td><a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a></td></tr>
+              <tr><td>09</td><td>Парамоновские склады. Склады с улицы Седова</td><td><a href="https://commons.wikimedia.org/?curid=42934916">Rost.galis</a></td><td>2014</td><td><a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a></td></tr>
+              <tr><td>10</td><td>Парамоновские склады. Вдоль второго корпуса</td><td><a href="https://commons.wikimedia.org/?curid=123170325">Екатерина Борисова</a></td><td>2022</td><td><a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a></td></tr>
+              <tr><td>11</td><td>«Ростов Арена». Арена с Ворошиловского моста</td><td><a href="https://commons.wikimedia.org/?curid=93049165">Alexander Roumega</a></td><td>2020</td><td><a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a></td></tr>
+              <tr><td>12</td><td>«Ростов Арена». Кровля и открытая чаша</td><td><a href="https://commons.wikimedia.org/?curid=66043067">Пресс-служба Президента России</a></td><td>2018</td><td><a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a></td></tr>
+              <tr><td>13</td><td>«Тачанка-ростовчанка». Силуэт в профиль</td><td><a href="https://topphotospots.com/location/pamyatnik-tachanka-rostovchanka-rostov-na-donu">Евгений Денисюк</a></td><td>публикация 2020</td><td>Условия использования у источника</td></tr>
+              <tr><td>14</td><td>«Тачанка-ростовчанка». Три четверти с подножием</td><td><a href="https://tourism.rostov-gorod.ru/attractions/382/5078/">Туристский портал Ростова-на-Дону</a></td><td>2019, по EXIF</td><td>Условия использования у источника</td></tr>
+              <tr><td>15</td><td>Парамоновские склады. Со смотровой на Седова</td><td><a href="https://topphotospots.com/location/smotrovaya-ploshchadka-rostov-na-donu">Евгений Денисюк</a></td><td>публикация 2020</td><td>Условия использования у источника</td></tr>
+              <tr><td>16</td><td>Дон и правая набережная. С моста вдоль набережной</td><td><a href="https://commons.wikimedia.org/?curid=108582371">Г. А. Липунов</a></td><td>2018</td><td><a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en">CC0</a></td></tr>
+              <tr><td>17</td><td>Дон и правая набережная. Мягкий свет над Доном</td><td><a href="https://commons.wikimedia.org/?curid=69524570">Г. А. Липунов (GennadyL)</a></td><td>2018</td><td><a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a></td></tr>
+              <tr><td>18</td><td>Ворошиловский мост. Панорама над левобережьем</td><td><a href="https://loveopium.ru/rossiya/rostov-na-donu.html">Слава Степанов</a></td><td>публикация 2019</td><td>Условия использования у источника</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+    <script>
+      (function () {
+        var viewer = document.getElementById("viewer");
+        var film = document.getElementById("film");
+        var overlay = document.getElementById("overlay");
+        var watch = document.getElementById("watch");
+        var open3d = document.getElementById("open3d");
+        var note = document.getElementById("note");
+        var hint = document.getElementById("hint");
+        var gl2 = false;
+        try { gl2 = !!document.createElement("canvas").getContext("webgl2"); } catch (e) {}
+        if (gl2) open3d.hidden = false;
+        else {
+          note.textContent = "Видео, 20 секунд. Для 3D-режима нужен браузер с WebGL 2.";
+          hint.hidden = true;
+        }
+        watch.addEventListener("click", function () {
+          overlay.hidden = true;
+          film.controls = true;
+          var p = film.play();
+          if (p && p.catch) p.catch(function () {});
+        });
+        film.addEventListener("ended", function () { film.controls = false; overlay.hidden = false; });
+        open3d.addEventListener("click", function () {
+          if (viewer.getAttribute("data-mode") === "scene") return;
+          film.pause();
+          film.removeAttribute("src");
+          var stage = document.getElementById("stage");
+          var canvas = document.createElement("canvas");
+          canvas.setAttribute("aria-label", "Трёхмерный пролёт над Доном");
+          var status = document.createElement("span");
+          status.id = "status";
+          status.setAttribute("role", "status");
+          status.textContent = "Загружается сцена…";
+          stage.appendChild(canvas);
+          stage.appendChild(status);
+          viewer.setAttribute("data-mode", "scene");
+          var s = document.createElement("script");
+          s.src = "/rostov-flight/scene.js";
+          s.onload = function () {
+            var tries = 0;
+            (function waitReady() {
+              if (window.rostovReady) { document.getElementById("play").click(); return; }
+              if (window.rostovError || ++tries > 600) return;
+              setTimeout(waitReady, 50);
+            })();
+          };
+          s.onerror = function () {
+            status.textContent = "Не удалось загрузить 3D-сцену. Видео доступно ниже.";
+            canvas.remove();
+            viewer.setAttribute("data-mode", "video");
+            open3d.hidden = true;
+          };
+          document.body.appendChild(s);
+        });
+      })();
+    </script>
+  </body>
+</html>
