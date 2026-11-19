@@ -11,20 +11,50 @@
     { id: "cyberpunk", label: "Киберпанк", icon: '<path d="M9.3 1.4 3.4 9.1h4.1l-.8 5.5 5.9-7.7H8.5l.8-5.5z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>' }
   ];
 
-  function valid(t) { return t === "light" || t === "dark" || t === "cyberpunk"; }
-  function current() {
-    var t = document.documentElement.getAttribute("data-theme");
-    if (valid(t)) return t;
-    try {
-      t = localStorage.getItem(KEY);
-      if (valid(t)) return t;
-    } catch (err) {}
-    return "light";
+  // Контракт страницы:
+  //   <meta name="lab-themes" content="light dark cyberpunk"> — какие темы страница умеет (по умолчанию "light dark");
+  //   <meta name="lab-theme-owner" content="page"> — тему ведёт сама страница (свой переключатель),
+  //   шапка не трогает data-theme и не рисует свой переключатель, а только подстраивает свои цвета.
+  var ALL = ["light", "dark", "cyberpunk"];
+  function metaContent(name) {
+    var m = document.querySelector('meta[name="' + name + '"]');
+    return m ? (m.getAttribute("content") || "").trim() : null;
   }
-  function apply(t) {
-    if (!valid(t)) t = "light";
+  function supported() {
+    var raw = metaContent("lab-themes");
+    var list = (raw === null ? "light dark" : raw).split(/[\s,]+/).filter(function (t) { return ALL.indexOf(t) >= 0; });
+    return list.length ? list : ["light"];
+  }
+  var SUPPORTED = supported();
+  var PAGE_OWNED = metaContent("lab-theme-owner") === "page";
+
+  function valid(t) { return SUPPORTED.indexOf(t) >= 0; }
+  // Сохранённый выбор не перезаписываем: если тема здесь недоступна, показываем ближайшую.
+  function clamp(t) {
+    if (valid(t)) return t;
+    if (t === "cyberpunk" && valid("dark")) return "dark";
+    return valid("light") ? "light" : SUPPORTED[0];
+  }
+  function stored() {
+    try { return localStorage.getItem(KEY); } catch (err) { return null; }
+  }
+  function current() { return clamp(stored()); }
+
+  // Цвета шапки на страницах со своей темой: светлая или тёмная по data-theme страницы или системе.
+  var mq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+  function syncScheme() {
     var root = document.documentElement;
+    var t = root.getAttribute("data-theme");
+    var dark = t === "dark" || (t !== "light" && t !== "cyberpunk" && !!(mq && mq.matches));
+    root.setAttribute("data-lab-scheme", dark ? "dark" : "light");
+  }
+
+  function apply(t) {
+    var root = document.documentElement;
+    if (PAGE_OWNED) { syncScheme(); return; }
+    t = clamp(t);
     root.setAttribute("data-theme", t);
+    root.setAttribute("data-lab-scheme", t === "dark" ? "dark" : "light");
     root.style.colorScheme = t === "dark" ? "dark" : "light";
     var meta = document.querySelector('meta[name="theme-color"]');
     if (meta) {
@@ -38,6 +68,40 @@
   }
   // Тема до отрисовки, если скрипт стоит в <head>.
   apply(current());
+  if (PAGE_OWNED) {
+    if (window.MutationObserver) {
+      new MutationObserver(syncScheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    }
+    if (mq) {
+      if (mq.addEventListener) mq.addEventListener("change", syncScheme);
+      else if (mq.addListener) mq.addListener(syncScheme);
+    }
+  }
+
+  function showSwitch() { return !PAGE_OWNED && SUPPORTED.length > 1; }
+
+  // Старые переключатели внутри страниц (.theme-switch в React-сборках, .tsw в perezagruzka-boty).
+  // Они скрыты CSS, но остаются в DOM: клик в шапке нажимает их кнопку, чтобы страница
+  // сама обновила своё состояние, графики, канвас и 3D.
+  var PAGE_SWITCH = ".theme-switch:not(.lab-theme-switch), .tsw";
+  var WORDS = { light: /светл/i, dark: /т[её]мн/i, cyberpunk: /кибер/i };
+  if (showSwitch()) document.documentElement.setAttribute("data-lab-switch", "shell");
+  function syncPageSwitch(t) {
+    var groups = document.querySelectorAll(PAGE_SWITCH);
+    for (var g = 0; g < groups.length; g++) {
+      if (groups[g].closest && groups[g].closest("[data-lab-header]")) continue;
+      var btns = groups[g].querySelectorAll("button");
+      for (var i = 0; i < btns.length; i++) {
+        var b = btns[i];
+        var id = b.getAttribute("data-theme-id");
+        var label = (b.getAttribute("aria-label") || "") + " " + (b.getAttribute("title") || "") + " " + (b.textContent || "");
+        if (id ? id === t : WORDS[t] && WORDS[t].test(label)) {
+          if (b.getAttribute("aria-pressed") !== "true") b.click();
+          break;
+        }
+      }
+    }
+  }
 
   function renderSwitch(host) {
     if (!host || host.getAttribute("data-lab-switch-ready")) return;
@@ -45,7 +109,7 @@
     host.setAttribute("role", "group");
     host.setAttribute("aria-label", "Тема");
     host.setAttribute("data-lab-switch-ready", "1");
-    host.innerHTML = THEMES.map(function (t) {
+    host.innerHTML = THEMES.filter(function (t) { return valid(t.id); }).map(function (t) {
       var name = "Тема: " + t.label.toLowerCase();
       return '<button type="button" data-theme-id="' + t.id + '" aria-label="' + name + '" title="' + name + '">' +
         '<svg viewBox="0 0 16 16" aria-hidden="true">' + t.icon + "</svg>" +
@@ -56,6 +120,7 @@
       if (!btn) return;
       var t = btn.getAttribute("data-theme-id");
       try { localStorage.setItem(KEY, t); } catch (err) {}
+      syncPageSwitch(t);
       apply(t);
     });
   }
@@ -112,11 +177,14 @@
       var home = isHome();
       header.innerHTML =
         '<a class="lab-bar__brand" href="/"' + (home ? ' aria-current="page"' : "") + ">Лаборатория</a>" +
-        '<div data-lab-theme-switch></div>';
+        (showSwitch() ? '<div data-lab-theme-switch></div>' : "");
       document.body.insertBefore(header, document.body.firstChild);
     }
     var switches = header.querySelectorAll("[data-lab-theme-switch]");
-    for (var s = 0; s < switches.length; s++) renderSwitch(switches[s]);
+    for (var s = 0; s < switches.length; s++) {
+      if (showSwitch()) renderSwitch(switches[s]);
+      else switches[s].parentNode && switches[s].parentNode.removeChild(switches[s]);
+    }
 
     if (!isHome() && !document.querySelector("[data-lab-keep] .lab-reload, [data-lab-keep] .lab-tg")) {
       var sub = document.createElement("div");

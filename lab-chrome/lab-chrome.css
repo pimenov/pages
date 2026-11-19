@@ -28,7 +28,8 @@
   --lab-foot-link: #202820;
   --lab-foot-border: #d9ded6;
 }
-:root[data-theme="dark"] {
+:root[data-theme="dark"],
+:root[data-lab-scheme="dark"]:not([data-theme="light"]):not([data-theme="cyberpunk"]) {
   --lab-tg-bg: #151a16;
   --lab-tg-border: rgba(200, 210, 200, 0.16);
   --lab-tg-title: #eef2ec;
@@ -170,10 +171,32 @@ html {
 }
 .lab-subscribe--bar {
   box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 16px;
   max-width: none;
   margin: 0;
-  padding: 14px 20px 4px;
+  /* Фон на всю ширину, карточки в колонке до 1120px по центру. */
+  padding: 14px max(20px, calc((100% - 1120px) / 2)) 4px;
   background: var(--lab-bar-bg);
+}
+.lab-subscribe--bar > .lab-tg,
+.lab-subscribe--bar > .lab-reload {
+  max-width: none;
+  height: 100%;
+}
+@media (max-width: 1100px) {
+  /* В узкой колонке кнопка уходит под текст, чтобы текст не сжимался в столбик. */
+  .lab-subscribe--bar > .lab-tg,
+  .lab-subscribe--bar > .lab-reload { flex-wrap: wrap; align-content: space-between; }
+  .lab-subscribe--bar .lab-tg__text,
+  .lab-subscribe--bar .lab-reload__text { flex: 1 1 calc(100% - 50px); }
+  .lab-subscribe--bar .lab-tg__btn,
+  .lab-subscribe--bar .lab-reload__btn { flex: 1 1 100%; max-width: none; }
+}
+@media (max-width: 760px) {
+  .lab-subscribe--bar { grid-template-columns: 1fr; gap: 10px; }
 }
 
 .lab-tg,
@@ -307,6 +330,27 @@ body[data-lab-chrome-ready] .lab-reload.page-reload {
 body[data-lab-chrome-ready] .lab-theme-switch {
   display: none !important;
 }
+/* Свои переключатели страниц, когда темы ведёт шапка: скрыты, но кнопки в DOM для синхронизации. */
+:root[data-lab-switch="shell"] .theme-switch:not(.lab-theme-switch),
+:root[data-lab-switch="shell"] .tsw {
+  display: none !important;
+}
 body[data-lab-chrome-ready] .lab-bar .lab-theme-switch {
   display: inline-flex !important;
+}
+
+/* Ссылки «пропустить к содержимому» прятались за top:-80px; под общей шапкой они стали видны поверх карточек.
+   Прячем до фокуса с клавиатуры. */
+body[data-lab-chrome-ready] .skip:not(:focus):not(:focus-within),
+body[data-lab-chrome-ready] .skip-link:not(:focus):not(:focus-within) {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
