@@ -62,7 +62,8 @@
         margin: 0 0 14px; font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Times New Roman", Times, serif;
         font-size: clamp(2.1rem, 5.4vw, 3.4rem); font-weight: 600; line-height: 1.08; letter-spacing: -0.03em; text-wrap: balance;
       }
-      .lead { max-width: 44rem; margin: 0 0 24px; font-size: 1.15rem; }
+      .lead { max-width: 44rem; margin: 0 0 8px; font-size: 1.15rem; }
+      .credit { max-width: 44rem; margin: 0 0 24px; color: var(--page-muted); font-size: 0.95rem; }
       h2 {
         margin: 56px 0 16px; padding-bottom: 10px; border-bottom: 1px solid var(--page-rule);
         font-size: 0.8rem; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; color: var(--page-muted);
@@ -136,6 +137,7 @@
       <p class="kicker">Эксперимент · 3D</p>
       <h1>Полёт над Доном</h1>
       <p class="lead">Двадцать секунд над Ростовом-на-Дону: камера идёт низко над водой, поднимается над Ворошиловским мостом, проходит мимо театра, собора и складов, пересекает реку к «Ростов Арене» и заканчивает у «Тачанки-ростовчанки» и панорамы Дона.</p>
+      <p class="credit">Сцену сделал Codex</p>
 
       <section class="viewer" id="viewer" data-mode="video" aria-label="Пролёт над Доном">
         <div class="stage" id="stage">
@@ -175,6 +177,7 @@
 
       <h2>Как собрано</h2>
       <ul class="facts">
+        <li><b>Сцену сделал Codex</b><p>Трёхмерный пролёт собран Codex.</p></li>
         <li><b>Three.js и WebGL 2</b><p>Вся сцена — код на Three.js. Камера, склейки и свет заданы по времени, поэтому любой кадр можно открыть точно: памятник, например, появляется на 17,37 с.</p></li>
         <li><b>Карта OpenStreetMap</b><p>Контуры кварталов, набережной и зданий взяты из OSM через OpenFreeMap (схема OpenMapTiles). Детали семи мест сверены с OSM 18 ноября 2026 года. Координаты считаются в метрах от Ворошиловского моста.</p></li>
         <li><b>Рельеф Copernicus</b><p>Высоты взяты из Copernicus DEM GLO-30 и пересчитаны в сглаженную сетку относительно уровня воды.</p></li>
