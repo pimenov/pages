@@ -2,16 +2,21 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
+    <meta name="lab-themes" content="light dark" />
+    <meta name="lab-theme-owner" content="page" />
     <script>
+      /* lab-chrome: тема до отрисовки по контракту страницы (meta lab-themes / lab-theme-owner).
+         Сохранённый выбор lab-theme не перезаписывается: недоступная тема заменяется ближайшей. */
       (function () {
-        var ok = { light: 1, dark: 1, cyberpunk: 1 };
-        var theme = "light";
-        try {
-          var saved = localStorage.getItem("lab-theme");
-          if (ok[saved]) theme = saved;
-        } catch (e) {}
-        document.documentElement.setAttribute("data-theme", theme);
-        document.documentElement.style.colorScheme = theme === "dark" ? "dark" : "light";
+        var r = document.documentElement;
+        function m(n) { var e = document.querySelector('meta[name="' + n + '"]'); return e ? e.getAttribute("content") || "" : null; }
+        if (m("lab-theme-owner") === "page") return;
+        var raw = m("lab-themes"), list = (raw === null ? "light dark" : raw).split(/[\s,]+/), t = null;
+        try { t = localStorage.getItem("lab-theme"); } catch (e) {}
+        if (list.indexOf(t) < 0) t = t === "cyberpunk" && list.indexOf("dark") >= 0 ? "dark" : list.indexOf("light") >= 0 ? "light" : list[0];
+        r.setAttribute("data-theme", t);
+        r.setAttribute("data-lab-scheme", t === "dark" ? "dark" : "light");
+        r.style.colorScheme = t === "dark" ? "dark" : "light";
       })();
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
