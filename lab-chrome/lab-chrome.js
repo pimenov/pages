@@ -80,6 +80,29 @@
 
   function showSwitch() { return !PAGE_OWNED && SUPPORTED.length > 1; }
 
+  // Старые переключатели внутри страниц (.theme-switch в React-сборках, .tsw в perezagruzka-boty).
+  // Они скрыты CSS, но остаются в DOM: клик в шапке нажимает их кнопку, чтобы страница
+  // сама обновила своё состояние, графики, канвас и 3D.
+  var PAGE_SWITCH = ".theme-switch:not(.lab-theme-switch), .tsw";
+  var WORDS = { light: /светл/i, dark: /т[её]мн/i, cyberpunk: /кибер/i };
+  if (showSwitch()) document.documentElement.setAttribute("data-lab-switch", "shell");
+  function syncPageSwitch(t) {
+    var groups = document.querySelectorAll(PAGE_SWITCH);
+    for (var g = 0; g < groups.length; g++) {
+      if (groups[g].closest && groups[g].closest("[data-lab-header]")) continue;
+      var btns = groups[g].querySelectorAll("button");
+      for (var i = 0; i < btns.length; i++) {
+        var b = btns[i];
+        var id = b.getAttribute("data-theme-id");
+        var label = (b.getAttribute("aria-label") || "") + " " + (b.getAttribute("title") || "") + " " + (b.textContent || "");
+        if (id ? id === t : WORDS[t] && WORDS[t].test(label)) {
+          if (b.getAttribute("aria-pressed") !== "true") b.click();
+          break;
+        }
+      }
+    }
+  }
+
   function renderSwitch(host) {
     if (!host || host.getAttribute("data-lab-switch-ready")) return;
     host.classList.add("lab-theme-switch");
@@ -97,6 +120,7 @@
       if (!btn) return;
       var t = btn.getAttribute("data-theme-id");
       try { localStorage.setItem(KEY, t); } catch (err) {}
+      syncPageSwitch(t);
       apply(t);
     });
   }
