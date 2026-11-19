@@ -180,21 +180,21 @@ body[data-lab-scene] .lab-foot a:visited {
 </style>
 </head>
 <body data-lab-scene>
-<canvas id="street" aria-label="A first-person night walk through a rain-soaked Rostov-on-Don courtyard. Drag to look around."></canvas>
-<div id="status" role="status">Opening the alley…</div>
-<nav id="transport" aria-label="Walk playback">
-<button id="play" title="Pause (Space)" aria-label="Pause"><svg viewBox="0 0 20 20" aria-hidden="true"><path id="playIcon" d="M7 4v12m6-12v12"/></svg></button>
-<input type="range" id="position" min="0" max="1000" step="1" value="0" aria-label="Walk position">
-<output id="clock" aria-label="Elapsed time">0:00</output>
-<button id="replay" title="Restart (R)" aria-label="Restart"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 8a6.3 6.3 0 1 1 .2 5M4 3.5V8h4.5"/></svg></button>
-<button id="full" title="Full screen (F)" aria-label="Full screen"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.3 7V3.3H7m6 0h3.7V7m0 6v3.7H13m-6 0H3.3V13"/></svg></button>
+<canvas id="street" aria-label="Ночная прогулка от первого лица по мокрому после дождя Газетному переулку в Ростове-на-Дону. Потяните, чтобы осмотреться."></canvas>
+<div id="status" role="status">Открываю переулок…</div>
+<nav id="transport" aria-label="Управление прогулкой">
+<button id="play" title="Пауза (Пробел)" aria-label="Пауза"><svg viewBox="0 0 20 20" aria-hidden="true"><path id="playIcon" d="M7 4v12m6-12v12"/></svg></button>
+<input type="range" id="position" min="0" max="1000" step="1" value="0" aria-label="Место на прогулке">
+<output id="clock" aria-label="Прошедшее время">0:00</output>
+<button id="replay" title="Сначала (R)" aria-label="Сначала"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 8a6.3 6.3 0 1 1 .2 5M4 3.5V8h4.5"/></svg></button>
+<button id="full" title="На весь экран (F)" aria-label="На весь экран"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.3 7V3.3H7m6 0h3.7V7m0 6v3.7H13m-6 0H3.3V13"/></svg></button>
 </nav>
 <script>
 'use strict';
 (() => {
 const canvas=document.getElementById('street'), status=document.getElementById('status');
 const gl=canvas.getContext('webgl2',{alpha:false,antialias:false,depth:true,stencil:false,powerPreference:'high-performance'});
-if(!gl){status.textContent='This walk needs WebGL 2. Open the file in a browser with hardware acceleration enabled.';document.getElementById('transport').hidden=true;return;}
+if(!gl){status.textContent='Для прогулки нужен WebGL 2. Откройте страницу в браузере с аппаратным ускорением.';document.getElementById('transport').hidden=true;return;}
 try {
 const TAU=Math.PI*2, clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)), mix=(a,b,t)=>a+(b-a)*t;
 function ease(a,b,x){const t=clamp((x-a)/(b-a));return t*t*(3-2*t);}
@@ -1657,21 +1657,21 @@ function reveal(delay=2200){
  if(playing)conceal=setTimeout(()=>{if(!drag&&!scrubbing){controls.classList.add('idle');document.body.classList.add('quiet');}},delay);
 }
 function playback(){
- const name=playing?'Pause':time>=duration?'Replay':'Play';
- play.setAttribute('aria-label',name);play.title=name+' (Space)';icon.setAttribute('d',playing?'M7 4v12m6-12v12':'M6 3.5 15.5 10 6 16.5Z');
+ const name=playing?'Пауза':time>=duration?'Сначала':'Смотреть';
+ play.setAttribute('aria-label',name);play.title=name+' (Пробел)';icon.setAttribute('d',playing?'M7 4v12m6-12v12':'M6 3.5 15.5 10 6 16.5Z');
  reveal();
 }
 function timecode(t){const s=Math.floor(t);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
 function progress(){
  slider.value=String(Math.round(time/duration*1000));slider.style.setProperty('--done',(100*time/duration)+'%');
- clock.value=timecode(time);slider.setAttribute('aria-valuetext',timecode(time)+' of '+timecode(duration));
+ clock.value=timecode(time);slider.setAttribute('aria-valuetext',timecode(time)+' из '+timecode(duration));
 }
 function toggle(){if(time>=duration)time=0;playing=!playing;lastStamp=null;dirty=true;playback();progress();}
 function restart(){time=0;aimX=aimY=0;playing=true;lastStamp=null;dirty=true;playback();progress();}
 async function fullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{reveal();}}
 play.addEventListener('click',toggle);replay.addEventListener('click',restart);full.addEventListener('click',fullscreen);
 if(!document.fullscreenEnabled)full.style.display='none';
-document.addEventListener('fullscreenchange',()=>{const label=document.fullscreenElement?'Exit full screen':'Full screen';full.setAttribute('aria-label',label);full.title=label+' (F)';dirty=true;});
+document.addEventListener('fullscreenchange',()=>{const label=document.fullscreenElement?'Выйти из полного экрана':'На весь экран';full.setAttribute('aria-label',label);full.title=label+' (F)';dirty=true;});
 slider.addEventListener('pointerdown',()=>{scrubbing=true;reveal();});
 function endScrub(){if(scrubbing){scrubbing=false;lastStamp=null;reveal();}}
 window.addEventListener('pointerup',endScrub);window.addEventListener('pointercancel',endScrub);
@@ -1693,7 +1693,7 @@ window.addEventListener('keydown',e=>{
 });
 document.addEventListener('visibilitychange',()=>{lastStamp=null;});
 window.addEventListener('resize',()=>{dirty=true;});
-canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();playing=false;status.hidden=false;status.textContent='Graphics interrupted. Waiting for the browser to restore the scene…';});
+canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();playing=false;status.hidden=false;status.textContent='Графика прервалась. Жду, пока браузер восстановит сцену…';});
 canvas.addEventListener('webglcontextrestored',()=>location.reload());
 function animate(stamp){
  const dt=lastStamp===null?0:(stamp-lastStamp)/1000;lastStamp=stamp;
@@ -1715,7 +1715,7 @@ function animate(stamp){
 }
 captureEnvironment();playback();requestAnimationFrame(animate);
 } catch(error){
- console.error(error);status.hidden=false;status.textContent='The alley could not be rendered. '+error.message;document.getElementById('transport').style.display='none';
+ console.error(error);status.hidden=false;status.textContent='Не удалось отрисовать переулок. '+error.message;document.getElementById('transport').style.display='none';
 }
 })();
 </script>
