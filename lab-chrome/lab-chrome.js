@@ -130,19 +130,27 @@
     return p === "/" || p === "/index.html";
   }
 
-  function subscribeMarkup() {
+  function tgMarkup() {
     return (
-      '<aside class="lab-reload" aria-label="Подписка «Перезагрузка»">' +
-        '<span class="lab-reload__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v4.5h-4.5"/></svg></span>' +
-        '<span class="lab-reload__text"><span class="lab-reload__title">Подписка «Перезагрузка»</span><span class="lab-reload__sub">Вебинары каждое воскресенье и команда Grok-ботов изнутри</span></span>' +
-        '<a class="lab-reload__btn" href="' + BOT + '" target="_blank" rel="noopener">Подписаться на «Перезагрузку» за&nbsp;1&nbsp;900&nbsp;₽ в&nbsp;месяц</a>' +
-      '</aside>' +
       '<aside class="lab-tg" aria-label="Telegram-канал НИИ ИИ">' +
         '<span class="lab-tg__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.7 3.3 2.6 10.3c-1.2.5-1.2 1.2-.2 1.5l4.6 1.4 1.8 5.4c.2.6.1.8.7.8.5 0 .7-.2 1-.5l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.8-1.3-1.5zM8.9 13l8.8-5.6c.4-.3.8-.1.5.2l-7.6 6.8-.3 3.3L8.9 13z"/></svg></span>' +
         '<span class="lab-tg__text"><span class="lab-tg__title">Telegram-канал «НИИ&nbsp;ИИ»</span><span class="lab-tg__sub">Сергей Пименов о практическом ИИ</span></span>' +
         '<a class="lab-tg__btn" href="' + CHANNEL + '" target="_blank" rel="noopener">Подписаться</a>' +
       '</aside>'
     );
+  }
+  function reloadMarkup() {
+    return (
+      '<aside class="lab-reload" aria-label="Закрытый чат «Перезагрузка»">' +
+        '<span class="lab-reload__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v4.5h-4.5"/></svg></span>' +
+        '<span class="lab-reload__text"><span class="lab-reload__title">Закрытый чат «Перезагрузка»</span><span class="lab-reload__sub">Вебинары каждое воскресенье</span></span>' +
+        '<a class="lab-reload__btn" href="' + BOT + '" target="_blank" rel="noopener">Подписка «Перезагрузка» 1900₽ в месяц</a>' +
+      '</aside>'
+    );
+  }
+  function subscribeMarkup() {
+    // На десктопе слева канал, справа «Перезагрузка».
+    return tgMarkup() + reloadMarkup();
   }
 
   function removeLegacy() {
@@ -186,7 +194,7 @@
       else switches[s].parentNode && switches[s].parentNode.removeChild(switches[s]);
     }
 
-    if (!isHome() && !document.querySelector("[data-lab-keep] .lab-reload, [data-lab-keep] .lab-tg")) {
+    if (!document.querySelector("[data-lab-keep] .lab-reload, [data-lab-keep] .lab-tg, [data-lab-subscribe]")) {
       var sub = document.createElement("div");
       sub.className = "lab-subscribe lab-subscribe--bar";
       sub.setAttribute("data-lab-subscribe", "");
@@ -194,17 +202,19 @@
       header.insertAdjacentElement("afterend", sub);
     }
 
-    if (!document.querySelector("[data-lab-footer]")) {
-      var footer = document.createElement("footer");
-      footer.className = "lab-foot";
-      footer.setAttribute("data-lab-footer", "");
-      footer.innerHTML =
-        '<div class="lab-foot__inner">' +
-          '<a href="' + CHANNEL + '" target="_blank" rel="noopener">Канал «НИИ ИИ»</a>' +
-          '<a href="' + BOT + '" target="_blank" rel="noopener">«Перезагрузка», 1&nbsp;900&nbsp;₽ в месяц</a>' +
-          '<a href="' + SITE + '">pimenov.ai</a>' +
-        "</div>";
-      document.body.appendChild(footer);
+    // Общий подвал с ссылками больше не ставится. Убрать и захардкоженный, если остался.
+    var leftover = document.querySelectorAll("footer.lab-foot, [data-lab-footer]");
+    for (var f = 0; f < leftover.length; f++) {
+      leftover[f].parentNode && leftover[f].parentNode.removeChild(leftover[f]);
+    }
+
+    // «Перезагрузка» внизу только на узком экране; на десктопе блок скрыт CSS.
+    if (!document.querySelector("[data-lab-subscribe-foot]")) {
+      var footSub = document.createElement("div");
+      footSub.className = "lab-subscribe lab-subscribe--foot";
+      footSub.setAttribute("data-lab-subscribe-foot", "");
+      footSub.innerHTML = reloadMarkup();
+      document.body.appendChild(footSub);
     }
 
     apply(current());
