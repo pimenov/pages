@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="Живая презентация вебинара «Перезагрузка» об OpenMotion и Codex">
+  <title>OpenMotion в движении · Перезагрузка</title>
+  <link rel="icon" href="media/reload-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="show.css">
+  <script src="show.js" defer></script>
+</head>
+<body>
+  <div class="deck" id="deck">
+    <header class="masthead">
+      <a class="identity" href="#start" aria-label="Перезагрузка, к началу презентации">
+        <img src="media/reload-mark.svg" alt="" width="30" height="30">
+        <span>Перезагрузка</span>
+      </a>
+      <span class="event">Сергей Пименов<span aria-hidden="true"> / </span><span>22 ноября 2026</span></span>
+      <button class="icon-button fullscreen" id="fullscreen" type="button" aria-label="Полноэкранный режим" title="Полноэкранный режим (F)">⛶</button>
+    </header>
+
+    <main class="stage" id="stage" tabindex="-1">
+      <section class="slide hero" data-slide="start" aria-labelledby="start-title">
+        <div class="hero-copy">
+          <h1 id="start-title">OpenMotion<span>в движении</span></h1>
+          <p>Как собрать свой ролик в диалоге с Codex</p>
+          <button class="button primary" type="button" data-play="launch"><span aria-hidden="true">▶</span> Трейлер OpenDesign <span class="duration">0:37</span></button>
+          <a class="text-link" href="https://open-design.ai/motion/" target="_blank" rel="noopener noreferrer">Сайт OpenMotion ↗</a>
+        </div>
+        <div class="hero-visual">
+          <button class="movie-art hero-art" type="button" data-play="teaser" aria-label="Запустить тизер с главной OpenMotion">
+            <img src="media/openmotion-poster.jpg" alt="Планета в иллюминаторе, кадр тизера OpenMotion">
+            <span class="play-disc" aria-hidden="true">▶</span>
+            <span class="image-caption">Тизер с главной OpenMotion</span>
+          </button>
+          <button class="trailer-inset" type="button" data-play="launch" aria-label="Запустить трейлер OpenDesign, 37 секунд">
+            <img src="media/launch-poster.jpg" alt="">
+            <span><strong>Introducing OpenDesign Motion</strong><small>Запуск · 0:37</small></span>
+          </button>
+        </div>
+      </section>
+
+      <section class="slide split light" data-slide="workflow" aria-labelledby="workflow-title" hidden>
+        <div class="section-copy">
+          <h2 id="workflow-title">Как работает OpenMotion</h2>
+          <p class="lead">Codex собирает сцены через MCP. В Studio ты видишь тот же проект и можешь менять его. Готовые примеры можно посмотреть здесь. Для редактирования понадобится своя <a href="https://github.com/nexu-io/openmotion" target="_blank" rel="noopener noreferrer">установка OpenMotion</a>.</p>
+          <div class="view-tabs" role="group" aria-label="Зоны Studio">
+            <button type="button" data-focus="scenes" aria-pressed="true">Сцены</button>
+            <button type="button" data-focus="preview" aria-pressed="false">Предпросмотр</button>
+            <button type="button" data-focus="timeline" aria-pressed="false">Таймлайн</button>
+            <button type="button" data-focus="export" aria-pressed="false">Экспорт</button>
+          </div>
+          <div class="explanation" aria-live="polite">
+            <strong id="workflow-label">Сцены проекта</strong>
+            <p id="workflow-detail">Слева открываются исходные HTML-композиции. Каждая отвечает за свой кусок видео.</p>
+          </div>
+          
+        </div>
+        <figure class="product-figure">
+          <div class="screenshot">
+            <img id="workflow-image" src="studio/editor.jpg" width="1760" height="1217" alt="Интерфейс OpenMotion Studio с проектами, композициями, плеером и таймлайном">
+            <span class="screen-focus" id="workflow-focus" aria-hidden="true"></span>
+          </div>
+          <figcaption>Скриншоты разработчиков OpenMotion</figcaption>
+        </figure>
+      </section>
+
+      <section class="slide split library-slide" data-slide="library" aria-labelledby="library-title" hidden>
+        <div class="section-copy">
+          <h2 id="library-title">Где искать движение</h2>
+          <p class="lead">В библиотеке есть полные проекты и ролики, разобранные по кадрам.</p>
+          <div class="view-tabs" role="group" aria-label="Виды библиотеки">
+            <button type="button" data-library="gallery" aria-pressed="true">Библиотека</button>
+            <button type="button" data-library="guide" aria-pressed="false">Карточка</button>
+            <button type="button" data-library="remix" aria-pressed="false">Воссоздать</button>
+          </div>
+          <div class="explanation" aria-live="polite">
+            <strong id="library-label">Поиск по стилю и задаче</strong>
+            <p id="library-detail">Открываем карточку и смотрим начало, переходы и то, можно ли открыть исходник.</p>
+          </div>
+          
+        </div>
+        <figure class="product-figure">
+          <div class="screenshot">
+            <img id="library-image" src="studio/library.jpg" width="1760" height="1217" alt="Галерея шаблонов OpenMotion с карточками роликов и фильтрами">
+          </div>
+          <figcaption>Карточки OpenMotion с исходниками, референсами и MOTION.md</figcaption>
+        </figure>
+      </section>
+
+      <section class="slide gallery-slide" data-slide="examples" aria-labelledby="examples-title" hidden>
+        <div class="slide-heading">
+          <h2 id="examples-title">Три шаблона</h2>
+          <p>Посмотрим, как устроено движение. На следующем слайде — наши версии.</p>
+        </div>
+        <div class="movie-gallery">
+          <article class="movie-card webflow">
+            <button class="movie-art" type="button" data-play="webflow" aria-label="Смотреть фрагмент Webflow">
+              <img src="media/webflow.jpg" alt="Неоновые слои и световые полосы в сцене Webflow" width="1280" height="720">
+              <span class="play-disc" aria-hidden="true">▶</span>
+              <span class="clip-time">0:18</span>
+            </button>
+            <div class="movie-copy">
+              <h3>Webflow</h3>
+              <p>Проход камеры через объёмное пространство из веб-страниц.</p>
+              
+            </div>
+          </article>
+          <article class="movie-card hyperos">
+            <button class="movie-art" type="button" data-play="hyperos" aria-label="Смотреть фрагмент HyperOS">
+              <img src="media/hyperos.jpg" alt="Ряд телефонов с контрастным цветным стеклом в шаблоне HyperOS" width="1440" height="810">
+              <span class="play-disc" aria-hidden="true">▶</span>
+              <span class="clip-time">0:18</span>
+            </button>
+            <div class="movie-copy">
+              <h3>HyperOS</h3>
+              <p>Крупный план, свет и переход от фактуры к устройствам.</p>
+              
+            </div>
+          </article>
+          <article class="movie-card salsa">
+            <button class="movie-art" type="button" data-play="salsa" aria-label="Смотреть вертикальный фрагмент Salsa">
+              <img src="media/salsa.jpg" alt="Яркие музыкальные фигуры вертикального ролика Salsa" width="406" height="720">
+              <span class="play-disc" aria-hidden="true">▶</span>
+              <span class="clip-time">0:18</span>
+            </button>
+            <div class="movie-copy">
+              <h3>Salsa</h3>
+              <p>Вертикальный клип, где рисунки меняются под ритм музыки.</p>
+              
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="slide gallery-slide our-versions" data-slide="our-films" aria-labelledby="our-films-title" hidden>
+        <div class="slide-heading">
+          <h2 id="our-films-title">Наши ролики</h2>
+          <p>Те же три шаблона, в том же порядке.</p>
+        </div>
+        <div class="movie-gallery">
+          <article class="movie-card webflow">
+            <button class="movie-art" type="button" data-play="our-pimenov" aria-label="Смотреть ролик pimenov.ai">
+              <img src="media/our-pimenov.jpg" alt="Главная pimenov.ai в сцене с объёмными веб-страницами" width="1280" height="720">
+              <span class="play-disc" aria-hidden="true">▶</span>
+              <span class="clip-time">0:19</span>
+            </button>
+            <div class="movie-copy">
+              <span class="template-credit">Webflow</span>
+              <h3>pimenov.ai</h3>
+              <p>Страницы сайта складываются из объёмных слоёв.</p>
+              
+            </div>
+          </article>
+          <article class="movie-card hyperos">
+            <button class="movie-art" type="button" data-play="our-statistics" aria-label="Смотреть ролик Соцсети в цифрах">
+              <img src="media/our-statistics.jpg" alt="Сергей Пименов, 5 332 405 просмотров на фоне стеклянного экрана" width="1546" height="870">
+              <span class="play-disc" aria-hidden="true">▶</span>
+              <span class="clip-time">0:22</span>
+            </button>
+            <div class="movie-copy">
+              <span class="template-credit">HyperOS</span>
+              <h3>Соцсети в цифрах</h3>
+              <p>5 332 405 просмотров в Facebook за 28 дней и другие цифры из медиакита.</p>
+              
+            </div>
+          </article>
+          <article class="movie-card salsa">
+            <button class="movie-art" type="button" data-play="our-nii-ai" aria-label="Смотреть ролик НИИ ИИ">
+              <img src="media/our-nii-ai.jpg" alt="Аватар НИИ ИИ в центре цветного калейдоскопа" width="406" height="720">
+              <span class="play-disc" aria-hidden="true">▶</span>
+              <span class="clip-time">0:17</span>
+            </button>
+            <div class="movie-copy">
+              <span class="template-credit">Salsa</span>
+              <h3>НИИ ИИ</h3>
+              <p>Заставка Telegram-канала Сергея Пименова.</p>
+              
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="slide split skill-case skill-faceless" data-slide="skills" aria-labelledby="skills-title" hidden>
+        <div class="section-copy">
+          <p class="skill-name">Faceless Video</p>
+          <h2 id="skills-title">Видео без ведущего</h2>
+          <p class="lead">Из статьи о 3D-пролёте над Ростовом сделали историю с закадровым голосом.</p>
+          <figure class="skill-quote">
+            <blockquote>«Мне хотелось снять Ростов с воды».</blockquote>
+            <figcaption><a href="https://pimenov.ai/articles/rostov-na-donu-3d-codex-astra/" target="_blank" rel="noopener noreferrer">Фраза из статьи на pimenov.ai ↗</a></figcaption>
+          </figure>
+          <div class="skills-actions">
+            <a class="text-link" href="https://t.me/ai_rostov/1930" target="_blank" rel="noopener noreferrer">Пост в «НИИ ИИ» ↗</a>
+            
+          </div>
+        </div>
+        <figure class="skill-film">
+          <button class="movie-art " data-play="faceless-skill" type="button" aria-label="Смотреть ролик «Пролёт над Доном»">
+              <img src="media/faceless-skill.jpg" alt="Кадр 3D-пролёта над Доном с титром" width="1280" height="720">
+              <span class="play-disc" aria-hidden="true">▶</span>
+              <span class="clip-time">0:27</span>
+            </button>
+          <figcaption>Голос ведёт монтаж от самого пролёта к статье, звуковой волне и посту.</figcaption>
+        </figure>
+      </section>
+
+      <section class="slide split light skill-case skill-growth" data-slide="skills-growth" aria-labelledby="growth-title" hidden>
+        <div class="section-copy">
+          <p class="skill-name">Growth Teardown</p>
+          <h2 id="growth-title">Как вырос Lovable</h2>
+          <p class="lead">Шесть событий продукта на одной линии времени с опубликованными цифрами компании.</p>
+          <div class="growth-points" aria-label="Три значения ARR по данным Lovable за 2025 год">
+            <p>ARR за 2025 год · годовая регулярная выручка</p>
+            <a href="https://lovable.dev/blog/fundraise-series-a-announcement" target="_blank" rel="noopener noreferrer"><time datetime="2025-02-25">25 февраля</time><strong>$17 млн</strong><span aria-hidden="true">↗</span></a>
+            <a href="https://lovable.dev/blog/agent" target="_blank" rel="noopener noreferrer"><time datetime="2025-07-23">23 июля</time><strong>$100 млн</strong><span aria-hidden="true">↗</span></a>
+            <a href="https://lovable.dev/blog/one-year-of-lovable" target="_blank" rel="noopener noreferrer"><time datetime="2025-11-18">18 ноября</time><strong>$200 млн</strong><span aria-hidden="true">↗</span></a>
+          </div>
+          
+        </div>
+        <figure class="skill-film">
+          <button class="movie-art " data-play="growth-skill" type="button" aria-label="Смотреть ролик «Как вырос Lovable»">
+              <img src="media/growth-skill.jpg" alt="Карта роста Lovable с опубликованными точками ARR и событиями продукта" width="1280" height="720">
+              <span class="play-disc" aria-hidden="true">▶</span>
+              <span class="clip-time">0:53</span>
+            </button>
+          <figcaption>На экране появляются анонсы Agent Mode, Shopify и MCP.</figcaption>
+        </figure>
+      </section>
+
+      <section class="slide skills-slide skill-motion" data-slide="skills-motion" aria-labelledby="motion-title" hidden>
+        <div class="slide-heading">
+          <div><p class="skill-name">motionmaxxing</p><h2 id="motion-title">Режиссёрская правка</h2></div>
+          <p>В новом начале заголовок статьи входит в настоящую страницу pimenov.ai на ударе музыки.</p>
+        </div>
+        <div class="remix-comparison">
+          <article class="remix-card">
+            <button class="movie-art " data-play="motion-skill-before" type="button" aria-label="Смотреть до правки">
+              <img src="media/motion-skill-before.jpg" alt="Слои страниц в исходном пролёте pimenov.ai" width="1280" height="720">
+              <span class="play-disc" aria-hidden="true">▶</span>
+              <span class="clip-time">0:08</span>
+            </button>
+            <h3>До · первые 8 секунд</h3>
+          </article>
+          <article class="remix-card">
+            <button class="movie-art remake" data-play="motion-skill-after" type="button" aria-label="Смотреть после правки">
+              <img src="media/motion-skill-after.jpg" alt="Заголовок статьи «Договор за 2–3 минуты» в движении" width="1280" height="720">
+              <span class="play-disc" aria-hidden="true">▶</span>
+              <span class="clip-time">0:08</span>
+            </button>
+            <h3>После · первое действие в кадре</h3>
+          </article>
+        </div>
+        <div class="skills-actions">
+          
+          <a class="text-link" href="https://pimenov.ai/articles/hermes-agent-dogovory-v-telegram/" target="_blank" rel="noopener noreferrer">Исходная статья ↗</a>
+          <a class="text-link" href="https://github.com/Tejashmakwana/motionmaxxing" target="_blank" rel="noopener noreferrer">Скилл на GitHub ↗</a>
+          
+        </div>
+      </section>
+
+      <section class="slide split light materials-slide" data-slide="materials" aria-labelledby="materials-title" hidden>
+        <div class="section-copy">
+          <h2 id="materials-title">Из чего собираем</h2>
+          <div class="resource-list">
+            
+            
+            
+          </div>
+        </div>
+        <figure class="product-figure brand-figure">
+          <div class="brand-composition">
+            <img class="brand-logo" src="media/pimenov-ai-logo.svg" alt="Логотип pimenov.ai">
+            <img class="brand-mark" src="media/reload-mark.svg" alt="Знак Перезагрузки">
+            <div class="brand-samples" aria-label="Цвета pimenov.ai и шрифт Onest">
+              <div class="sample blue"><strong>Onest</strong><span>#3D69E7</span></div>
+              <div class="sample cream"><strong>Аа</strong><span>#F4F7FC</span></div>
+              <div class="sample ink"><strong>Аа</strong><span>#171D39</span></div>
+            </div>
+          </div>
+          <figcaption>Материалы нашего проекта. Цвета найдены в Brand Kit «Перезагрузка»</figcaption>
+        </figure>
+      </section>
+
+      <section class="slide gallery-slide reels-slide" data-slide="webinar-reels" aria-labelledby="webinar-reels-title" hidden>
+        <div class="slide-heading">
+          <h2 id="webinar-reels-title">Нарезка вебинара</h2>
+          <p>Три рилса из записи 15 ноября с оригинальным голосом.</p>
+        </div>
+        <div class="movie-gallery">
+          <article class="movie-card">
+            <button class="movie-art" type="button" data-play="webinar-reel-growth" aria-label="Смотреть «Когда Telegram начал расти»">
+              <img src="media/webinar-reel-growth.jpg" alt="" width="540" height="960">
+              <span class="play-disc" aria-hidden="true">▶</span>
+              <span class="clip-time">11,7 с</span>
+            </button>
+            <div class="movie-copy"><h3>Когда Telegram начал расти</h3></div>
+          </article>
+          <article class="movie-card">
+            <button class="movie-art" type="button" data-play="webinar-reel-links" aria-label="Смотреть «Ссылка под каждым постом»">
+              <img src="media/webinar-reel-links.jpg" alt="" width="540" height="960">
+              <span class="play-disc" aria-hidden="true">▶</span>
+              <span class="clip-time">8,6 с</span>
+            </button>
+            <div class="movie-copy"><h3>Ссылка под каждым постом</h3></div>
+          </article>
+          <article class="movie-card">
+            <button class="movie-art" type="button" data-play="webinar-reel-traffic" aria-label="Смотреть «Трафик приходит извне»">
+              <img src="media/webinar-reel-traffic.jpg" alt="" width="540" height="960">
+              <span class="play-disc" aria-hidden="true">▶</span>
+              <span class="clip-time">14,2 с</span>
+            </button>
+            <div class="movie-copy"><h3>Трафик приходит извне</h3></div>
+          </article>
+        </div>
+        
+      </section>
+
+      <section class="slide live-slide" data-slide="live" aria-labelledby="live-title" hidden>
+        <div class="live-tint" aria-hidden="true"></div>
+        <div class="live-copy">
+          <h2 id="live-title">Собираем свой ролик в эфире</h2>
+          <p>Тема для нового проекта: зачем приносить свой вопрос в «Перезагрузку».</p>
+          <a class="button contrast" href="https://pimenov.ai/perezagruzka/" target="_blank" rel="noopener noreferrer">Открыть исходную страницу ↗</a>
+        </div>
+        <ol class="live-steps">
+          <li><strong>Сайт</strong><span>Смотрим, что можно подтвердить и показать за 15 секунд.</span></li>
+          <li><strong>Разговор с Codex</strong><span>Делаем два контрастных начала и выбираем с аудиторией.</span></li>
+          <li><strong>Полная Studio</strong><span>Собираем сцены, правим титр, экспортируем MP4.</span></li>
+        </ol>
+      </section>
+      <section class="slide article-slide" data-slide="article-films" aria-labelledby="article-films-title" hidden>
+        <h2 id="article-films-title">По свежим статьям</h2>
+        <div class="remix-comparison">
+          <article class="remix-card article-film">
+            <button class="movie-art remake" data-play="article-hermes" type="button" aria-label="Смотреть «Договор за 2–3 минуты»">
+              <img src="media/article-hermes.jpg" alt="Документ на мониторе в синей трёхмерной сцене" width="1280" height="720">
+              <span class="play-disc" aria-hidden="true">▶</span>
+              <span class="clip-time">0:19</span>
+            </button>
+            <div class="article-film-copy">
+              <p class="template-credit">Magic Share · 22 ноября</p>
+              <h3>Договор за 2–3 минуты</h3>
+              <div class="skills-actions">
+                <a class="text-link" href="https://pimenov.ai/articles/hermes-agent-dogovory-v-telegram/" target="_blank" rel="noopener noreferrer">Читать статью ↗</a>
+                
+              </div>
+            </div>
+          </article>
+          <article class="remix-card article-film">
+            <button class="movie-art remake" data-play="article-rostov" type="button" aria-label="Смотреть «Пролёт над Ростовом»">
+              <img src="media/article-rostov.jpg" alt="Купола Ростовского собора в трёхмерном пролёте над городом" width="1280" height="720">
+              <span class="play-disc" aria-hidden="true">▶</span>
+              <span class="clip-time">0:20</span>
+            </button>
+            <div class="article-film-copy">
+              <p class="template-credit">Dia · 20 ноября</p>
+              <h3>Пролёт над Ростовом</h3>
+              <div class="skills-actions">
+                <a class="text-link" href="https://pimenov.ai/articles/rostov-na-donu-3d-codex-astra/" target="_blank" rel="noopener noreferrer">Читать статью ↗</a>
+                
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="controls">
+      <button class="icon-button previous" id="previous" type="button" aria-label="Предыдущий слайд">←</button>
+      <nav class="chapter-nav" aria-label="Слайды">
+        <a href="#start">Старт</a>
+        <a href="#workflow">Studio</a>
+        <a href="#library">Библиотека</a>
+        <a href="#examples">Шаблоны</a>
+        <a href="#our-films">Наши ролики</a>
+        <a href="#skills">Без ведущего</a>
+        <a href="#skills-growth">Рост</a>
+        <a href="#skills-motion">До и после</a>
+        <a href="#materials">Материалы</a>
+        <a href="#webinar-reels">Нарезка</a>
+        <a href="#live">Работа в эфире</a>
+        <a href="#article-films">Статьи</a>
+      </nav>
+      <span class="counter" id="counter" aria-live="polite"></span>
+      <button class="notes-button" id="notes-open" style="display:none" type="button" aria-haspopup="dialog" title="Заметки ведущего (N)">Заметки</button>
+      <button class="icon-button next" id="next" type="button" aria-label="Следующий слайд">→</button>
+    </footer>
+  </div>
+
+  <dialog class="player-dialog" id="player" aria-labelledby="player-title">
+    <div class="dialog-head">
+      <div><p id="player-kind"></p><h2 id="player-title"></h2></div>
+      <button class="icon-button close-button" id="player-close" type="button" aria-label="Закрыть ролик">×</button>
+    </div>
+    <video id="video" preload="metadata" controls playsinline></video>
+    <p class="video-status" id="video-status" role="status" hidden></p>
+    <div class="dialog-foot">
+      <a href="#" id="video-source" target="_blank" rel="noopener noreferrer"></a>
+      <a href="#" id="video-project" target="_blank" rel="noopener noreferrer" hidden>Открыть редактируемый проект ↗</a>
+    </div>
+  </dialog>
+
+  <dialog class="notes-dialog" id="notes" aria-labelledby="notes-title">
+    <div class="dialog-head">
+      <div><p id="notes-timing"></p><h2 id="notes-title">Заметки ведущего</h2></div>
+      <button class="icon-button close-button" id="notes-close" type="button" aria-label="Закрыть заметки">×</button>
+    </div>
+    <div id="notes-copy"></div>
+  </dialog>
+</body>
+</html>
