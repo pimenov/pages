@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lab.pimenov.ai/</loc>
-    <lastmod>2026-11-27</lastmod>
+    <lastmod>2026-11-28</lastmod>
   </url>
   <url>
     <loc>https://lab.pimenov.ai/webinar-2026-11-08/</loc>
@@ -91,5 +91,9 @@
   <url>
     <loc>https://lab.pimenov.ai/rust-for-dummies/</loc>
     <lastmod>2026-11-27</lastmod>
+  </url>
+  <url>
+    <loc>https://lab.pimenov.ai/video-breakdown-guide/</loc>
+    <lastmod>2026-11-28</lastmod>
   </url>
 </urlset>
